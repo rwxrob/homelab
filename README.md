@@ -20,14 +20,30 @@ Sample systems that fit this description:
 * [HP Z640 Mid-Tower Workstation](https://a.co/d/2QieEnW)
 * [HP Z640 Specs](https://zworkstations.com/products/z640/)
 
-## Stages of Personal Development Home Lab
+## Stages of Personal Home Lab Evolution
 
 0. Personal laptop and ssh access to cloud servers
-1. Add VMware Player or Workstation and 1-3 headless VMs
-2. Add dedicated Type 1 Hypervisor server, ESXi, K8S, plug and play
+1. Add VMware Player/Workstation and 1-3 headless VMs
+2. Add dedicated Type 1 Hypervisor server, Proxmox, K8S, plug and play
 3. Add network attached storage device + IAM + UPS
-4. Enterprise rack + switch + multiple components, own 20-amp circuit(s)
+4. Enterprise rack + switch + multiple components, ESXi + own 20-amp circuit(s)
 5. Multiple secure VLANs and physical networks
+6. TFTP and PXEBOOT for multiple hardware instances
+
+## Kubernetes Images
+
+
+## Devices
+
+* [NETGEAR 24-Port PoE](https://a.co/d/irM1DOg)
+* 14 Mac Minis
+
+6U Shelf
+* 4 MSI Tridents
+
+2U Rack
+* 16 Raspi 3/4
+
 
 ## Related:
 
