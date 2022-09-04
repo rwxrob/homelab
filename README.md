@@ -1,66 +1,99 @@
-# 🏡💻 Personal Home Lab
+# 🏡💻 Personal/Professional Enterprise Home Lab
 
-This repo contains the design, details, and planning your first personal
-home lab that can be used for experimentation and learning for work or
-just personal growth. It includes recommended system specs for common
-rig that should work for most people with the follFuquay-Varinaowing needs and
-requirements:
+This repo contains the design, details, and planning involved in
+creating my home lab dedicated to emulating my professional working
+environment for training as well as for fun and profit doing other
+things at home.
 
-* Designed primarily for IT infrastructure engineers
-* Must work in a studio (New York style) apartment
+This home lab is designed to maximize experience and learning for
+on-prem Kubernetes deployments and management and Kubernetes
+applications development and delivery with a bias for systems utility
+services, blue team programming, and inter-cluster operations. I want to
+write a lot of Kubernetes operations applications including those that
+communicate between clusters.
+
+[TODO List](todo.md)
+
+## Requirements and Target Specs
+
+* Designed primarily for IT infrastructure engineers (and hackers)
+* Must work in a studio (New York style) apartment closet
 * Must be completely portable
-* Must cost under \$2500 USD
-* Used as headless, dedicated, separate server
-* Provides maximum employment potential (not hobbyists)
+* Must cost under \$5000 USD
+* Should reuse existing hardware as much as possible (minis, pis)
+* Must have a main headless, dedicated, separate server
 * Requires at least one GPU for ML job projects
-* Minimum of 12 cores and 128 GiB RAM
+* Minimum scale: 32 VMs @ 2 cores, 2 GiB RAM, 40 GiB disk
+* Must have DMZ separate from home network for pentest scanning
 
-Sample systems that fit this description:
+## Planned Use Cases
 
-* [HP Z640 Mid-Tower Workstation](https://a.co/d/2QieEnW)
-* [HP Z640 Specs](https://zworkstations.com/products/z640/)
+The purpose of this home lab is to facilitate development of on-prem
+cloud native infrastructure management software and services primarily
+involving Kubernetes and major Kubernetes applications.
+
+* Install and maintain a primary Kubernetes cluster on-prem
+* Experiment with different separate K8S clusters
+* Explore Microk8s and k3s on Raspberry Pi
+* Experiment with communication between clusters
+* Practice use NFS and Cephfs K8S storage class providers
+* Practice identity management with Keycloak, Kerberos, OpenLDAP
+* Deploy and test Calico, MetalLB, Harbor, Istio, Tekton, Argo, Elastic
+  Search, Prometheus, Thanos, Calico
+
+## Design Decisions
+
+**Ubuntu Server.** Red Hat might be big in enterprise, but unnecessary
+in my home lab. Ubuntu Server skills are far more important for
+containers and developers to master.
+
+**No FreeIPA.** Primarily a Red Hat technology, can be used on Ubuntu
+but swimming upstream to do so. Also, Keycloak is mandatory for things
+that will mirror what I do at work.
+
+*No Proxmox.* Only supports 32 nodes per cluster and falls on it's face
+with just 14 (which I tried).
+
+*No VMs for main Kubernetes.* One distinct advantage of on-prem
+Kubernetes is that the 30% performance penalty from virtualisation
+(which all cloud providers have) can be avoided.
+
+*etcd not in pod.* Even though etcd will run on the same three control
+plane nodes, it will not run from within a k8s pod as `kubeadm` does by
+default. This will require independent certificate management cycles and
+out-of-cluster backup methods.
 
 ## Stages of Personal Home Lab Evolution
 
-0. Personal laptop and ssh access to cloud servers
-1. Add VMware Player/Workstation and 1-3 headless VMs
-2. Add dedicated Type 1 Hypervisor server, Proxmox, K8S, plug and play
-3. Add network attached storage device + IAM + UPS
-4. Enterprise rack + switch + multiple components, ESXi + own 20-amp circuit(s)
-5. Multiple secure VLANs and physical networks
-6. TFTP and PXEBOOT for multiple hardware instances
+Here are the stages of my own personal home lab. I'm at stage #7 now.
 
-## Kubernetes Images
+1.  Personal laptop and ssh access to cloud servers
+2.  Built my own on-prem (garage) Linux server machine from scratch
+3.  Added old discarded machines from friends and family with Linux
+4.  Used VMware Player/Workstation and 1-3 headless VMs on “desktop”
+5.  Acquired several Mac Minis and Raspi while at SKILSTAK
+6.  Added dedicated Type 1 Hypervisor server, K8S, plug and play
+7.  Add Enterprise 21U rack PDU + PoE switch(es) + multiple components
+8.  Configured multiple secure virtual and physical networks
 
+## Devices (Eventually)
 
-## Devices
+* 4U: [HP Z640 Mid-Tower Workstation](https://a.co/d/2QieEnW) (14/128)
+* 6U: 19 Mac Minis
+* 2U: 16 Raspi (2/2 each)
+* 2U: NAS Device (eventually)
+* 1U: NETGEAR 16-Port PoE
+* 1U: [NETGEAR 24-Port PoE](https://a.co/d/irM1DOg)
+* 1U: PDU 14+2 Outlet (w/display)
+* 1U: PDU 14+2 Outlet (w/display)
+* 2U: [APC 2x20Amp Groups UPS](https://a.co/d/5LKX3LZ)
 
-* [NETGEAR 24-Port PoE](https://a.co/d/irM1DOg)
-* 14 Mac Minis
+## Software and Services Deployment
 
-6U Shelf
-* 4 MSI Tridents
-
-2U Rack
-* 16 Raspi 3/4
-
+* Where to put `etcd`?
+* CephFS 5-6 MSI Tridents
 
 ## Related:
 
 * [Homelabbity](https://www.reddit.com/r/homelab/)
 * [LabPorn](https://www.reddit/r/LabPorn/)
-
-## Questions:
-
-*Why not Raspberry Pis / SBC?*
-
-*Woah, why so expensive?* This isn't expensive at all. Most good gaming
-rigs cost more. Plus this is an essential tool to progressing in the IT
-engineering field. Without it learning and experimenting is much harder.
-
-*Can't I do this on a laptop?* No.
-
-*Why ESXi and not Proxmox or XCP-ng?* ESXi is enterprise de facto
-standard and pays the most for skills using it.
-
-*Why VMware and not libvirt/KVM?*
