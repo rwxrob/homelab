@@ -78,24 +78,24 @@ involving Kubernetes and major Kubernetes applications.
 
 ## Design Decisions
 
-***Ubuntu Server.*** Red Hat might be big in enterprise, but unnecessary
+**Ubuntu Server.** Red Hat might be big in enterprise, but unnecessary
 in my home lab. Ubuntu Server skills are far more important for
 containers and developers to master.
 
-***No FreeIPA.*** Primarily a Red Hat technology, can be used on Ubuntu
+**No FreeIPA.** Primarily a Red Hat technology, can be used on Ubuntu
 but swimming upstream to do so. Also, Keycloak is mandatory for things
 that will mirror what I do at work.
 
-***No Proxmox.*** Only supports 32 nodes per cluster and falls on it's face
+**No Proxmox.** Only supports 32 nodes per cluster and falls on it's face
 with just 14 (which I tried). Using KVM directly and Virtual Machine
 Manager instead, which saves on a lot of Proxmox framework overhead
 waste as well.
 
-***No VMs for main Kubernetes.*** One distinct advantage of on-prem
+**No VMs for main Kubernetes.** One distinct advantage of on-prem
 Kubernetes is that the 30% performance penalty from virtualisation
 (which all cloud providers have) can be avoided.
 
-***etcd outside of Kubernetes.*** Even though `kubeadm` will nicely setup
+**etcd outside of Kubernetes.** Even though `kubeadm` will nicely setup
 etcd within a Pod *inside* Kubernetes, this makes me uncomfortable. If
 K8S dies, everything dies. So having K8S problems could actually prevent
 me from keeping etcd healthy. Having etcd external will require slightly
@@ -103,7 +103,7 @@ more management (independent certificate management cycles,
 out-of-cluster backup methods, etc.) but I sleep better knowing the most
 important component of my K8S cluster has its own home.
 
-***192.168.1.0/24 subnet.*** This is the default in my home router. It has
+**192.168.1.0/24 subnet.** This is the default in my home router. It has
 plenty of IP addresses for the devices on our home network and I don't
 feel like changing that right now. Most new machines will be VMs on a
 private virtual network within Kubernetes. Rather than use network
@@ -111,7 +111,7 @@ segmentation for protection, I use a zero-trust approach to not trust
 any device on the network and gather and audit all access with
 centralized logging.
 
-***Physical key login.*** All access is simplified and hardened by the use
+**Physical key login.** All access is simplified and hardened by the use
 of a Yubikey physical key. This includes SSH and
 Keycloak/OpenLDAP/Kerberos. The goal is to never allow any access to any
 device from any user whatsoever without possessing one. Even if someone
@@ -119,7 +119,7 @@ did get in and elevate permissions while not being caught by real-time
 auditing they still wouldn't be able to use any of the certs for that
 user without being able to touch the physical key.
 
-***No disk encryption.*** I just don't need it so the overhead would be
+**No disk encryption.** I just don't need it so the overhead would be
 wasted. Besides, if I did need it, I could just encrypt a loopback
 mounted storage block file or just use GPG.
 
