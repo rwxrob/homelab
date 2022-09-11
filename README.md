@@ -26,6 +26,9 @@ rigs, laptops, or any other devices in our home.
 * 1 x Raspi 4
 * 2 x Raspi 3B
 * 2 x nVidia Jetson Nano (2 GiB version)
+* 1 x Netgear Nighthawk X6 R8000 (with USB SMB-accessible storage)
+* 1 x [Netgear 24-Port (12 PoE) GiB Switch](https://a.co/d/5uAJry2)
+* 1 x [TP-Link 24 Port GiB Switch](https://a.co/d/iq1AupR)
 
 (I donated more than a dozen Raspi 2s to friends on stream for projects.)
 
