@@ -29,8 +29,13 @@ rigs, laptops, or any other devices in our home.
 * 1 x Netgear Nighthawk X6 R8000 (with USB SMB-accessible storage)
 * 1 x [Netgear 24-Port (12 PoE) GiB Switch](https://a.co/d/5uAJry2)
 * 1 x [TP-Link 24 Port GiB Switch](https://a.co/d/iq1AupR)
+* 1 x ISP cable modem
 
 (I donated more than a dozen Raspi 2s to friends on stream for projects.)
+
+Eventually, I need to get a beefy, separate (not rack mounted) UPS and
+possibly an iSCSI NAS device. The UPS should prevent the need for
+dedicated 20Amp circuits.
 
 ## Planned Use Cases
 
@@ -137,13 +142,13 @@ I'm at stage #7 now.
 7.  Add Enterprise rack and multiple components
 8.  Configured multiple secure virtual and physical networks
 
-## Devices (Eventually)
+## Rack Organization
 
 Rack 1 (21U)
 
-* ON: Monitor, Keyboard, Mouse, Netgear Wifi Router
-* 2U: ISP Cable Modem and Power, Misc.
-* 4U: [HP Z640 Mid-Tower Workstation](https://a.co/d/2QieEnW) (28/128)
+* ON: Monitor, keyboard, mouse, Netgear Wifi Router
+* 3U: ISP Cable Modem and Power, Misc.
+* 4U: HP Z640 Mid-Tower Workstation (w/rails)
 * 1U: TP-Link 24-Port Switch with VLAN
 * 1U: 24-Port Patch Panel
 * 1U: PDU 14+2 Outlet (w/display)
@@ -153,8 +158,9 @@ Rack 1 (21U)
 
 Rack 2 (21U)
 
+* ON: iMac, keyboard, mouse
 * 4U: USB Power Supply, Nanos, Pis (shelf)
-* 1U: [NETGEAR 24-Port PoE](https://a.co/d/irM1DOg)
+* 1U: NETGEAR 24-Port (12 PoE)
 * 1U: 24-Port Patch Panel
 * 1U: PDU 14+2 Outlet (w/display)
 * 2U: MSI Trident (shelf)
@@ -162,7 +168,7 @@ Rack 2 (21U)
 * 2U: MSI Trident (shelf)
 * 2U: MSI Trident (shelf)
 * 2U: MSI Trident (shelf)
-* 2U: MSI Trident, Mac Pro (bottom)
+* 4U: MSI Trident, Mac Pro (bottom)
 
 ## Related:
 
