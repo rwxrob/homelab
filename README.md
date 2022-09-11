@@ -52,7 +52,8 @@ involving Kubernetes and major Kubernetes applications.
 
 ## Main Kubernetes Stack
 
-* Ubuntu Servers
+* Ubuntu Server OS
+* Sidero/Talos OS
 * Ansible
 * CRI-O
 * etcd
@@ -61,7 +62,6 @@ involving Kubernetes and major Kubernetes applications.
 * NFS Storage Class
 * SMB Storage Class
 * CephFS Storage Class
-* Sidero/Talos
 * Keycloak
 * OPA Gatekeeper
 * Harbor
@@ -69,10 +69,12 @@ involving Kubernetes and major Kubernetes applications.
 * Tekton
 * Argo
 * Elastic Search
+* LogStash
+* Kibana
 * Prometheus
 * Thanos
-* Calico
 * Graphana
+* Icinga2
 
 ## Design Decisions
 
