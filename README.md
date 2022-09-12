@@ -1,4 +1,4 @@
-# 🏡💻 Enterprise Home Lab
+# 🐧Linux 🏡 Homelab init
 
 This repo contains the design, details, and planning involved in
 creating my home lab suitable for enterprise-level work. I've opted to
@@ -39,9 +39,10 @@ dedicated 20Amp circuits.
 
 ## Planned Use Cases
 
-The purpose of this home lab is to facilitate development of on-prem
-cloud native infrastructure management software and services primarily
-involving Kubernetes and major Kubernetes applications.
+The purpose of this apartment lab is to facilitate development of
+on-prem cloud native infrastructure management software and services
+primarily involving Kubernetes and major Kubernetes applications and
+running pentesting scans intrusion detection experiments (honeypots).
 
 * Install and maintain a primary Kubernetes cluster on-prem
 * Experiment with different separate K8S clusters
@@ -55,31 +56,37 @@ involving Kubernetes and major Kubernetes applications.
 * Automate bug bounty discovery and stealth target scanning
 * Practice intrusion detection and develop software to assist
 
-## Main Kubernetes Stack
+## Infrastructure Stack
 
 * Ubuntu Server OS
 * Sidero/Talos OS
+* CoreDNS Server
 * Ansible
-* CRI-O
+* Icinga2
 * etcd
+* Kubernetes
+* CRI-O
 * Calico
 * MetalLB
+* Node Feature Discovery (NFD)
+* nVidia GPU Feature Discovery
 * NFS Storage Class
 * SMB Storage Class
 * CephFS Storage Class
 * Keycloak
+* OpenLDAP/Kerberos
 * OPA Gatekeeper
-* Harbor
+* Harbor/Trivy
 * Istio
 * Tekton
-* Argo
+* ArgoCD
 * Elastic Search
-* LogStash
+* LogStash (or Fluentd?)
 * Kibana
 * Prometheus
 * Thanos
 * Graphana
-* Icinga2
+* Github Enterprise (\$245/year/person)
 
 ## Design Decisions
 
@@ -114,7 +121,7 @@ feel like changing that right now. Most new machines will be VMs on a
 private virtual network within Kubernetes. Rather than use network
 segmentation for protection, I use a zero-trust approach to not trust
 any device on the network and gather and audit all access with
-centralized logging.
+centralized logging. Also, should be using DNS for most things.
 
 **Physical key login.** All access is simplified and hardened by the use
 of a Yubikey physical key. This includes SSH and
