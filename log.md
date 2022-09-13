@@ -1,5 +1,73 @@
 # Log of Work to Setup Homelab
 
+## Tuesday, September 13, 2022, 4:53:48AM EDT
+
+* Decided to use SSH as primary distributed configuration and RPC
+  method. This means I have have entirely agent-less (ssh) configuration
+  management dependency (using Ansible, etc.). This also means that
+  eventually Bonzai agent, will have full ssh server support embedded
+  into it as other prominent apps have done as well. SSH is the dominant
+  networking protocol for such things. This also means will be
+  abandoning plans to use GPG and/or mTLS/gRPC in Bonzai agent in favor
+  of SSH.
+
+* Install Ansible into workstation VM "control node" (anton, Ubuntu
+  Server running on Windows 10 with VMware Workstation Pro).
+
+* After hearing from community, decided to keep only inventory/hosts in
+  dot files and put the rest of my custom playbook collection in a
+  separate rwxrob/ansible repo.
+
+* Create (or copy) an Ansible playbook to install CoreDNS on all three
+  redundant servers that forwards to local router.
+
+* Never using Cloudflare (1.1.1.1/1.0.0.1) or Google (8.8.8.8/8.8.4.4)
+  DNS (or any other centralized DNS) for anything. Such centralization
+  is bad for the Internet, as we've seen when large sections of the
+  Internet went dark (more than once) when CloudFlare when down.
+
+* Consider alternative DNS providers (instead of ISP, which might be
+  using Cloudflare or Google without us knowing).
+
+* Determine if DNS over TLS (DoT) or HTTPS (DoH) is worth it?
+
+* Run Ansible playbook to install CoreDNS on mini1, mini2, mini3.
+
+* Decided against any adblocking/pie-hole stuff because of bad
+  experience in the past with it being overly aggressive and just a PITA
+  to keep configured properly.
+
+* Decided on `lab.example.com` as fully qualified local zone domain
+  (suggested by @j33pguy) so that examples and streaming and
+  documentation all sync up from home. I won't be using a fully
+  qualified domain at all for most things, but when I do, there's a good
+  chance I'm going to want to document it for public consumption.
+
+Related:
+
+* Cloudflare Down Again  
+  https://www.theverge.com/2022/6/21/23176519/cloudflare-outage-june-2022-discord-shopify-fitbit-peleton
+
+* The Best Free and Public DNS Servers (September 2022)  
+  https://www.lifewire.com/free-and-public-dns-servers-2626062
+
+* Dropbear SSH  
+  https://matt.ucc.asn.au/dropbear/dropbear.html
+
+* What is DNS over TLS (DoT)? \| DDI (Secure DNS, DHCP, IPAM) \| Infoblox  
+  https://www.infoblox.com/glossary/dns-over-tls-dot/
+
+* What is DNS over HTTPS? Definition, Implementation, Benefits, and More  
+  https://heimdalsecurity.com/blog/dns-over-https-doh/
+
+* nielux: I learned Ansible from Jef Geerling, 10/10 would recommend his
+  youtube series/book about it
+
+* Roles --- Ansible Documentation  
+  https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
+
+* https://www.oreilly.com/library/view/learning-coredns/9781492047957/ch04.html
+
 ## Monday, September 12, 2022, 5:54:43PM EDT
 
 * Reviewed and update inventory of all available hardware.
