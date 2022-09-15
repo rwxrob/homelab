@@ -21,15 +21,17 @@
 * Create (or copy) an Ansible playbook to install CoreDNS on all three
   redundant servers that forwards to local router.
 
-* Never using Cloudflare (1.1.1.1/1.0.0.1) or Google (8.8.8.8/8.8.4.4)
-  DNS (or any other centralized DNS) for anything. Such centralization
-  is bad for the Internet, as we've seen when large sections of the
-  Internet went dark (more than once) when CloudFlare when down.
+* Hate using Cloudflare (1.1.1.1/1.0.0.1) or Google (8.8.8.8/8.8.4.4)
+  DNS (or any other centralized DNS) for anything, but gave in for
+  Cloudflare since fastest. Such centralization is bad for the Internet,
+  as we've seen when large sections of the Internet went dark (more than
+  once) when CloudFlare when down.
 
 * Consider alternative DNS providers (instead of ISP, which might be
   using Cloudflare or Google without us knowing).
 
-* Determine if DNS over TLS (DoT) or HTTPS (DoH) is worth it?
+* Determined that DNS over TLS (DoT) or HTTPS (DoH) isn't worth it for
+  me (right now) but will experiment with it later.
 
 * Run Ansible playbook to install CoreDNS on mini1, mini2, mini3.
 

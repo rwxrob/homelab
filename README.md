@@ -151,31 +151,65 @@ I'm at stage #7 now.
 
 ## Rack Organization
 
-Rack 1 (21U)
+I'm separating the hardware into two racks to make it easier to move
+around and, when necessary, locate close to separate circuits (although
+I'm shameless enough to run a power extension chord from a good 20A
+bathroom circuit breaker if I need).
 
-* ON: Monitor, keyboard, mouse, Netgear Wifi Router
-* 3U: ISP Cable Modem and Power, Misc.
-* 4U: HP Z640 Mid-Tower Workstation (w/rails)
-* 1U: TP-Link 24-Port Switch with VLAN
-* 1U: 24-Port Patch Panel
-* 1U: PDU 14+2 Outlet (w/display)
-* 5U: 10 Mac Minis (shelf)
-* 1U: PDU 14+2 Outlet (w/display)
-* 5U: 10 Mac Minis (shelf)
+The 21U rack height allows me to put a monitor/keyboard/mouse on top and
+have it be the perfect height to use while standing. Since only the HP
+server is fixed (and on rails), I can pull anything out on the rare
+occasion when I need to plug them into a monitor, etc.
 
-Rack 2 (21U)
+### Rack 1 (21U)
 
-* ON: iMac, keyboard, mouse
-* 4U: USB Power Supply, Nanos, Pis (shelf)
-* 1U: NETGEAR 24-Port (12 PoE)
-* 1U: 24-Port Patch Panel
-* 1U: PDU 14+2 Outlet (w/display)
-* 2U: MSI Trident (shelf)
-* 2U: MSI Trident (shelf)
-* 2U: MSI Trident (shelf)
-* 2U: MSI Trident (shelf)
-* 2U: MSI Trident (shelf)
-* 4U: MSI Trident, Mac Pro (bottom)
+* ON: Dell Monitor, keyboard, mouse
+* 1U: 20A (2400W) PDU 10+2 Outlet (w/display)
+* 1U: TP-Link 24-Port Switch with VLAN (14W to PDU)
+* 1U: 24-Port Cat6 Keystone Patch Panel
+* 4U: HP Z640 Mid-Tower Workstation (w/rails) (975W to PDU)
+* 2U: MSI Trident (shelf) (230W to PDU)
+* 2U: MSI Trident (shelf) (230W to PDU)
+* 2U: MSI Trident (shelf) (230W to PDU)
+* 2U: MSI Trident (shelf) (230W to PDU)
+* 2U: MSI Trident (shelf) (230W to PDU)
+* 2U: MSI Trident (resting) (230W to PDU)
+* 2U: 2700W(3000VA) CyberPower OL3000RTXL2U UPS (w/display)
+
+Max Power Consumption:
+
+Devices|Watts
+-|-
+Switch      |   14W
+HP Server   |  975W
+MSI Tridents| 1380W
+Dell Monitor|   33W
+TOTAL       | 2402W
+
+### Rack 2 (21U)
+
+* ON: Netgear Wifi Router (5W to Mixed Power)
+* 1U: 15A (1800W) PDU 12+2 Outlet (w/display)
+* 1U: 15A (1800W) PDU 12+2 Outlet (w/display)
+* 1U: NETGEAR 24-Port (12 PoE, 100W to PDU1)
+* 1U: 24-Port Cat6 Keystone Patch Panel
+* 3U: ISP Modem (5W to Mixed Power)
+* xx: Mixed Power strip (to PDU1)
+* 2U: 2 x Jeston Nanos, Pi4, 2 x Pi3 (self,5x5W to Mixed Power)
+* 5U: 10 Mac Minis (shelf) (10x85W to PDU1)
+* 5U: 10 Mac Minis (shelf) (10x85W to PDU2)
+* xx: Mac Pro (shelf behind minis) (902W to PDU2)
+* 2U: 2700W(3000VA) CyberPower OL3000RTXL2U UPS (w/display)
+
+Max Power Consumption:
+
+Devices|Watts
+-|-
+Switch      |   100W
+Mixed Power |    35W
+Minis       |  1700W
+Mac Pro     |   902W
+TOTAL       |  2737W
 
 ## Related:
 
