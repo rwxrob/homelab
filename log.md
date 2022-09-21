@@ -1,14 +1,14 @@
 # Log of Work to Setup Homelab
 
-## Tuesday, September 22, 2022, 7:56:53PM EDT
+/bin/bash: line 1: Hnow: command not found
 
 * Spent a lot of time calculating energy budget and wattages.
 
 * Bought a Protectli Vault after getting freaked out by the Netgear
   Nighthawk firmware update. Downloaded and installed pfSense. Then a
-  friend talked.
+  friend talked me into trying OPNsense and prefer it.
 
-* Experienced strange freezes with `cpu_loop`
+* Experienced strange freezes with `cpu_loop` caused by VMware.
 
 * Made mistake of buying 20A PDU with plugs that don't match sockets.
 
