@@ -83,10 +83,17 @@ running pentesting scans intrusion detection experiments (honeypots).
 * Elastic Search
 * LogStash (or Fluentd?)
 * Kibana
+* Seldon
 * Prometheus
 * Thanos
 * Graphana
 * Github Enterprise (\$245/year/person)
+
+Other stuff I still have to learn:
+
+* Airflow
+* VertexAI
+* GCP
 
 ## Design Decisions
 
@@ -167,14 +174,14 @@ occasion when I need to plug them into a monitor, etc.
 * 1U: 20A (2400W) PDU 10+2 Outlet (w/display)
 * 1U: TP-Link 24-Port Switch with VLAN (14W to PDU)
 * 1U: 24-Port Cat6 Keystone Patch Panel
+* 2U: MSI Trident (shelf) (230W to PDU)
+* 2U: MSI Trident (shelf) (230W to PDU)
+* 2U: MSI Trident (shelf) (230W to PDU)
+* 2U: MSI Trident (shelf) (230W to PDU)
+* 2U: MSI Trident (shelf) (230W to PDU)
+* 2U: MSI Trident (shelf) (230W to PDU)
+* 2U: UPS (w/display)
 * 4U: HP Z640 Mid-Tower Workstation (w/rails) (975W to PDU)
-* 2U: MSI Trident (shelf) (230W to PDU)
-* 2U: MSI Trident (shelf) (230W to PDU)
-* 2U: MSI Trident (shelf) (230W to PDU)
-* 2U: MSI Trident (shelf) (230W to PDU)
-* 2U: MSI Trident (shelf) (230W to PDU)
-* 2U: MSI Trident (resting) (230W to PDU)
-* 2U: 2700W(3000VA) CyberPower OL3000RTXL2U UPS (w/display)
 
 Max Power Consumption:
 

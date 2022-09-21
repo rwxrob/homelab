@@ -1,5 +1,23 @@
 # Log of Work to Setup Homelab
 
+## Tuesday, September 22, 2022, 7:56:53PM EDT
+
+* Spent a lot of time calculating energy budget and wattages.
+
+* Bought a Protectli Vault after getting freaked out by the Netgear
+  Nighthawk firmware update. Downloaded and installed pfSense. Then a
+  friend talked.
+
+* Experienced strange freezes with `cpu_loop`
+
+* Made mistake of buying 20A PDU with plugs that don't match sockets.
+
+* Lots of discussion about best stages for beginner development
+
+Related:
+
+* Protectli Vault FW4B - https://a.co/d/6OU2p3M
+
 ## Tuesday, September 13, 2022, 4:53:48AM EDT
 
 * Decided to use SSH as primary distributed configuration and RPC
