@@ -59,6 +59,7 @@ running pentesting scans intrusion detection experiments (honeypots).
 ## Infrastructure Stack
 
 * Ubuntu Server OS
+* KVM/libvirt/Firecracker
 * Sidero/Talos OS
 * CoreDNS Server
 * Ansible
@@ -171,7 +172,7 @@ occasion when I need to plug them into a monitor, etc.
 ### Rack 1 (21U)
 
 * ON: Dell Monitor, keyboard, mouse
-* 1U: 20A (2400W) PDU 10+2 Outlet (w/display)
+* 1U: 15A (1800W) PDU 10+2 Outlet (w/display)
 * 1U: TP-Link 24-Port Switch with VLAN (14W to PDU)
 * 1U: 24-Port Cat6 Keystone Patch Panel
 * 2U: MSI Trident (shelf) (230W to PDU)
@@ -180,7 +181,7 @@ occasion when I need to plug them into a monitor, etc.
 * 2U: MSI Trident (shelf) (230W to PDU)
 * 2U: MSI Trident (shelf) (230W to PDU)
 * 2U: MSI Trident (shelf) (230W to PDU)
-* 2U: UPS (w/display)
+* 2U: UPS (w/display) - eventually
 * 4U: HP Z640 Mid-Tower Workstation (w/rails) (975W to PDU)
 
 Max Power Consumption:
@@ -198,27 +199,29 @@ TOTAL       | 2402W
 * ON: Netgear Wifi Router (5W to Mixed Power)
 * 1U: 15A (1800W) PDU 12+2 Outlet (w/display)
 * 1U: 15A (1800W) PDU 12+2 Outlet (w/display)
-* 1U: NETGEAR 24-Port (12 PoE, 100W to PDU1)
 * 1U: 24-Port Cat6 Keystone Patch Panel
+* 1U: NETGEAR 24-Port (12 PoE, 100W to PDU1)
 * 3U: ISP Modem (5W to Mixed Power)
 * xx: Mixed Power strip (to PDU1)
+* xx: Protectli Vault (OPNsense) (16W)
 * 2U: 2 x Jeston Nanos, Pi4, 2 x Pi3 (self,5x5W to Mixed Power)
 * 5U: 10 Mac Minis (shelf) (10x85W to PDU1)
 * 5U: 10 Mac Minis (shelf) (10x85W to PDU2)
 * xx: Mac Pro (shelf behind minis) (902W to PDU2)
-* 2U: 2700W(3000VA) CyberPower OL3000RTXL2U UPS (w/display)
+* 2U: 2700W(3000VA) CyberPower OL3000RTXL2U UPS (w/display) - eventually
 
 Max Power Consumption:
 
 Devices|Watts
 -|-
 Switch      |   100W
-Mixed Power |    35W
+Mixed Power |    51W
 Minis       |  1700W
 Mac Pro     |   902W
 TOTAL       |  2737W
 
 ## Related:
 
+* [Protectli Vault](https://a.co/d/5Q53hbG)
 * [Homelabbity](https://www.reddit.com/r/homelab/)
 * [LabPorn](https://www.reddit/r/LabPorn/)

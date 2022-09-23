@@ -1,18 +1,37 @@
 # Log of Work to Setup Homelab
 
-/bin/bash: line 1: Hnow: command not found
+## Thursday, September 22, 2022, 8:29:02PM EDT
+
+* Dropping `fluff` because redundant to libvirt and Firecracker.
+
+* Start to research Kubernetes installation starting with `etcd`.
+  Decided on three external instances for HA simulation without too much
+  overhead on these little Mac Minis.
+
+## Thursday, September 22, 2022, 7:36:50PM EDT
 
 * Spent a lot of time calculating energy budget and wattages.
 
 * Bought a Protectli Vault after getting freaked out by the Netgear
   Nighthawk firmware update. Downloaded and installed pfSense. Then a
-  friend talked me into trying OPNsense and prefer it.
+  friend talked me into trying OPNsense so installed and prefer.
 
-* Experienced strange freezes with `cpu_loop` caused by VMware.
+* Experienced strange freezes with `cpu_loop` caused by VMware with my
+  `anton` VM. Turned out to be unrelated to new network changes.
+  Probably from the KVM dying.
+
+* Startec KVM died. Not sure why. Going to try to get a new one on
+  warranty. Added two keyboards on my desk for now (one for work, one
+  for home lab streaming/gaming rig).
 
 * Made mistake of buying 20A PDU with plugs that don't match sockets.
 
-* Lots of discussion about best stages for beginner development
+* Got everything cabled up. Turned up short an MSI power adapter, so
+  waiting on that and my (lazy) purchase of 0.5' and 1' cables.
+
+* Did the research in the apartment to find all the circuits and what
+  they power. Bathroom receptacle are combined (2 of them) 20A. Turns
+  out the master bedroom is on its own 15A circuit.
 
 Related:
 
