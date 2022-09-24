@@ -1,0 +1,41 @@
+rwxrob@trident1:~$ sudo fio --rw=write --ioengine=sync --fdatasync=1 --directory=test-data --size=22m --bs=2300 --name=mytest
+mytest: (g=0): rw=write, bs=(R) 2300B-2300B, (W) 2300B-2300B, (T) 2300B-2300B, ioengine=sync, iodepth=1
+fio-3.28
+Starting 1 process
+mytest: Laying out IO file (1 file / 22MiB)
+Jobs: 1 (f=1): [W(1)][100.0%][w=107KiB/s][w=48 IOPS][eta 00m:00s]
+mytest: (groupid=0, jobs=1): err= 0: pid=2238: Fri Sep 23 16:28:57 2022
+  write: IOPS=47, BW=106KiB/s (108kB/s)(22.0MiB/213265msec); 0 zone resets
+    clat (usec): min=12, max=116, avg=16.93, stdev= 3.10
+     lat (usec): min=13, max=117, avg=17.34, stdev= 3.10
+    clat percentiles (nsec):
+     |  1.00th=[13760],  5.00th=[13888], 10.00th=[14016], 20.00th=[14144],
+     | 30.00th=[14272], 40.00th=[14400], 50.00th=[18048], 60.00th=[18304],
+     | 70.00th=[18304], 80.00th=[18560], 90.00th=[20096], 95.00th=[20608],
+     | 99.00th=[23168], 99.50th=[27008], 99.90th=[45312], 99.95th=[46336],
+     | 99.99th=[59136]
+   bw (  KiB/s): min=   71, max=  130, per=99.41%, avg=105.15, stdev=13.41, samples=426
+   iops        : min=   32, max=   58, avg=47.06, stdev= 5.96, samples=426
+  lat (usec)   : 20=87.23%, 50=12.74%, 100=0.02%, 250=0.01%
+  fsync/fdatasync/sync_file_range:
+    sync (msec): min=4, max=108, avg=21.24, stdev=14.32
+    sync percentiles (usec):
+     |  1.00th=[ 5080],  5.00th=[ 6390], 10.00th=[ 7373], 20.00th=[ 9372],
+     | 30.00th=[11207], 40.00th=[13173], 50.00th=[23200], 60.00th=[25035],
+     | 70.00th=[25822], 80.00th=[27657], 90.00th=[30016], 95.00th=[33424],
+     | 99.00th=[76022], 99.50th=[78119], 99.90th=[81265], 99.95th=[83362],
+     | 99.99th=[92799]
+  cpu          : usr=0.08%, sys=0.64%, ctx=28584, majf=0, minf=13
+  IO depths    : 1=200.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,10029,0,0 short=10029,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=106KiB/s (108kB/s), 106KiB/s-106KiB/s (108kB/s-108kB/s), io=22.0MiB (23.1MB), run=213265-213265msec
+
+Disk stats (read/write):
+    dm-0: ios=73/42866, merge=0/0, ticks=596/214556, in_queue=215152, util=100.00%, aggrios=73/31441, aggrmerge=0/11451, aggrticks=598/212530, aggrin_queue=420272, aggrutil=100.00%
+  sda: ios=73/31441, merge=0/11451, ticks=598/212530, in_queue=420272, util=100.00%
+

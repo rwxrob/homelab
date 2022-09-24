@@ -1,5 +1,33 @@
 # Log of Work to Setup Homelab
 
+## Friday, September 23, 2022, 9:57:09AM EDT
+
+Began etcd installation but discovered Mac Minis have 26 IOPS and MSI
+Tridents have 50. The recommended minimum is 50 from the etcd docs. This
+video has a lot of frustration as I try to even figure out how to
+determine a reliable IOPS value (ultimately with fio) but worth it.
+
+Other etcd installation notes:
+
+• Only “tier 1” supported OS is Linux on AMD64
+• 2-4 cores is fine for less than “thousands of clients”
+• 8 GiB RAM for less than “thousands of clients”
+• “Disk speed is most critical factor”
+• Hardware recommendations \| etcd https://etcd.io/docs/v3.5/op-guide/hardware/
+• https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd
+
+First make a directory for `fio` to use.
+
+```
+mkdir test-data
+```
+
+Then start the test on a quiet system.
+
+```
+sudo fio --rw=write --ioengine=sync --fdatasync=1 --directory=test-data --size=22m --bs=2300 --name=mytest
+```
+
 ## Thursday, September 22, 2022, 8:29:02PM EDT
 
 * Dropping `fluff` because redundant to libvirt and Firecracker.

@@ -19,8 +19,8 @@ machine learning (eventually). This does not include my gaming/streaming
 rigs, laptops, or any other devices in our home.
 
 * 1 x [HP Z640](https://a.co/d/2QieEnW) (28 cores, 128 GiB RAM, 512 GiB SSD)
-* 20 x 2016 Mac Mini (4 cores, 4 GiB RAM, 512 GiB HD)
-* 6 x MSI Trident (4 cores, 8 GiB RAM, 1 TiB HD)
+* 20 x 2016 Mac Mini (4 cores, 4 GiB RAM, 512 GiB HD, 26 IOPS)
+* 6 x MSI Trident (4 cores, 8 GiB RAM, 1 TiB HD, 50 IOPS)
 * 1 x Mac Pro
 * 1 x iMac
 * 1 x Raspi 4
