@@ -1,0 +1,16 @@
+network:
+  ethernets:
+    ens33:
+      dhcp4: false
+      dhcp6: false
+      addresses:
+      #- 192.168.0.1/16  # VMs
+        - 192.168.2.1/16 # Macs
+      # - 192.168.3.1/16 # Tridents
+      #- 192.168.4.1/16 # VM Hosts
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 8.8.4.4
+  version: 2
