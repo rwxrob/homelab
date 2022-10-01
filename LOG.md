@@ -1,5 +1,159 @@
 # Log of Work to Setup Homelab
 
+## Saturday, October 1, 2022, 10:07:17AM EDT
+
+* Figured out how to force JSON Ansible output
+* Reorganized this homelab directory
+* Added `setup` scripts for `hosts` and `~/.config/ansible`
+* Streamlined overall Ansible setup (still need playbooks later)
+* Reviewed container runtimes and CRI
+* Discussed the problems with Docker for Kubernetes
+* Decided to go with CRI-O
+* Learned that Kubernetes and CRI-O versions are synced (1.24 -> 1.24)
+* Decided to maintain local `.deb` packages as if pulling into enterprise
+* Learned cri-tools contains crictl
+* Learned conmon, containers-common are used by cri-o and cri-o-runc
+* Added pull-debs script (and `*.debs`) to .gitignore
+
+Related:
+
+* https://docs.ansible.com/ansible/latest/user_guide/intro_patterns.html#patterns-and-ad-hoc-commands
+* Container Runtimes \| Kubernetes Guide and Tutorial  
+  https://www.containiq.com/post/container-runtimes
+* https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/1.25/xUbuntu_22.04/amd64/
+
+## Friday, September 30, 2022, 4:37:01PM EDT
+
+* Start Kubernetes installation from scratch (`kubeadm`)
+* Decided to disable swap even though 1.22 has "alpha" support for it
+* Stole an Ansible playbook to disable swap (see [ansible](ansible))
+* Discovered OPNsense will take an ssh command (ex: `ssh root@opnsense ls`)
+* Decided *not* to do any Ansible management of OPNsense
+* Created Ansible [inventory](ansible/inventory) file (in git) with groups by hardware
+* Did `ansible -i inventory all -m ping` to see all respond
+* Did `ansible -i inventory all -m setup | tee setup.out`
+* Decided to use `-i inventory GROUP` by default
+* Learned how to "dry run" an Ansible playbook
+* Disabled swap from [swapoff.yaml](ansible/swapoff.yaml)
+* Check mac address is unique with [script](ansible/check-uniq-mac)
+* Check product_uuid is unique with [script](ansible/check-uniq-product_uuid)
+* Discovered how to combine [bash script](ansible/ls-all) calling
+  `ansible-playbook`
+*  
+
+```
+ansible-playbook -i inventory -l all -K swapoff.yaml
+ansible -i inventory all -m command -a 'free -h'
+ansible -i inventory all -m command -a 'ip link'
+```
+
+Related:
+
+* New in Kubernetes v1.22: alpha support for using swap memory \| Kubernetes  
+  https://kubernetes.io/blog/2021/08/09/run-nodes-with-swap-alpha/
+* Ansible: How to disable swap : linuxadmin  
+  https://www.reddit.com/r/linuxadmin/comments/flzx5r/ansible_how_to_disable_swap/
+
+## Friday, September 30, 2022, 1:01:29PM EDT
+
+* Tested Dell Optiplex IOPS (3443)
+* Retested Tridents IOPS (41)
+* Retested Mac Minis IOPS (84)
+* Retested HP Z640 IOPS (294)
+* Decided to use /etc/hosts instead of DNS for now
+* Discovered /etc/hosts allows ssh command tab completion
+* Considering setting up NFS for /home on everything
+* Considering setting up Samba USB drive for /home on everything
+
+## Thursday, September 29, 2022, 11:26:19PM EDT
+
+* Added Dell Optiplex control plane machines (arrived today)
+
+## Wednesday, September 28, 2022, 3:27:50PM EDT
+
+* Reconfigured network to use 192.168/16 (no IPv6)
+* Using 192.168.1.1/16 for gateway
+* Using 192.168.1/16 for DHCP (IPv4)
+* Using 192.168.0/16 for static VMs
+* Using 192.168.2/16 for Macs
+* Using 192.168.3/16 for MSI Tridents
+* Using 192.168.4/16 for HP (and future) VM host servers
+* Using 192.168.42/16 for control plane nodes
+* Using 8.8.8.8/8.8.4.4 for DNS until CoreDNS setup
+* Upgraded OPNsense to 22.7.4 from 22.7 (known WAN IPv6 issues)
+* Finished all cabling for rack 2
+* Decided to buy HDMI keystone adapters for MSI Tridents
+* Learned CIS security concern for IPv6 is dated and insignificant
+* Created netplan.yaml template
+
+## Tuesday, September 27, 2022, 3:27:40PM EDT
+
+* Determined that initial `fio` output was completely wrong
+* Got 100+ IOPS on Tridents
+* Got 50+ regularly on Mac Minis
+* Still keeping the control plane machines ordered with SSD
+* Decided to use 172.16/12 (class B) instead of others
+* Decided to soon drop IPv6 completely from LAN
+* Decided to use example.com for domain since only relevant in docs
+* Decided to use latest Kubernetes in personal cluster
+* VMs on HP will be for testing different Kubernetes versions
+* Current latest stable version of Kubernetes is 1.24 LTS
+* Decided to use etcd version 3.5.5 (approved for LTS)
+* Wrote `install-etcd` to get the latest version from GitHub
+* Installed `jq` on target control planes
+* Read about initial etcd setup
+* Realized etcd (effectively) requires static IP addresses
+* Abandoned notion of "just use DCHP registered names" for home lab
+
+Related:
+
+* https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md
+* https://github.com/kubernetes/kubernetes/blob/8cbe9e91c8b39de3dbb3b7e1eb76c586846721c5/cmd/kubeadm/app/constants/constants.go#L469-L483
+* Clustering Guide \| etcd  
+  https://etcd.io/docs/v3.4/op-guide/clustering/
+* https://github.com/kelseyhightower/etcd-production-setup
+
+## Tuesday, September 27, 2022, 1:14:36PM EDT
+
+* Ordered faster IOPS Dell Optiplex machines for control plane
+* Going to use NFS and OpenEBS StorageClass
+* Learn `strace`, it's one of top 5 most important ops tools to learn
+
+Encountered annoying AF_INET6 errors that prevent command-line searching
+and research:
+
+```
+connect(3, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "2600:1f18:2489:8202:5162:2cb:b813:121f", &sin6_addr), sin6_scope_id=0}, 28) = -1 EALREADY (Operation already in progress)
+pselect6(4, NULL, [3], NULL, {tv_sec=0, tv_nsec=100000000}, NULL) = 1 (out [3], left {tv_sec=0, tv_nsec=35265649})
+connect(3, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "2600:1f18:2489:8202:5162:2cb:b813:121f", &sin6_addr), sin6_scope_id=0}, 28) = -1 ETIMEDOUT (Connection timed out)
+close(3)                                = 0
+socket(AF_INET, SOCK_STREAM, IPPROTO_TCP) = 3
+ioctl(3, FIONBIO, [1])                  = 0
+```
+
+I need to disable handing out DHCP6 addresses to my home network to fix
+other problems as well.
+
+Turns out this specific problem is all from ipv6 not working with Ubuntu
+Server and these applications and can be corrected by disabling IPV6 on
+a specific machine (which is also turns out, is a part of standard CIS
+hardening). This change is not persistent, however, unless you change it
+in /etc/sysctl.conf which is probably not necessary.
+
+```
+sudo sysctl net.ipv6.conf.all.disable_ipv6=1
+```
+
+Or could just do this for everything.
+
+```
+sudo ua enable cis
+```
+
+Related
+
+* https://media.geeksforgeeks.org/wp-content/uploads/20220330131350/StatediagramforserverandclientmodelofSocketdrawio2-448x660.png
+
 ## Friday, September 23, 2022, 9:57:09AM EDT
 
 Began etcd installation but discovered Mac Minis have 26 IOPS and MSI

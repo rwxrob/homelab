@@ -1,0 +1,15 @@
+coredns_version: "1.9.4"
+coredns_download_url: "https://github.com/coredns/coredns/releases/download/v{{ coredns_version }}/coredns_{{ coredns_version }}_linux_amd64.tgz"
+coredns_install_tmp_base_dir: /tmp
+
+coredns_user: coredns
+coredns_group: coredns
+coredns_config_path: /etc/coredns
+coredns_config_file_path: /etc/coredns/Corefile
+
+coredns_forward_servers: [ "1.1.1.1", "1.0.0.1" ]
+coredns_main_zone: lab.example.com
+
+coredns_forward_tls: false
+#coredns_forward_servers: [ "tls://1.1.1.1", "tls://1.0.0.1" ]
+#coredns_forward_tls_server_name: cloudflare-dns.com

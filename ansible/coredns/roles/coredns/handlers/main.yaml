@@ -1,0 +1,4 @@
+- name: Reload CoreDNS
+  systemd:
+    name: coredns
+    state: reloaded

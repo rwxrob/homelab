@@ -1,0 +1,34 @@
+- name: Create CoreDNS systemd unit file
+  template:
+    src: coredns.service.j2
+    dest: /lib/systemd/system/coredns.service
+    mode: 0644
+  register: coredns_systemd
+
+- name: Ensure systemd-resolved stopped
+  systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: no
+
+- name: Drop CoreDNS configuration file
+  template:
+    src: Corefile.j2
+    dest: "{{ coredns_config_file_path }}"
+    owner: "{{ coredns_user }}"
+    group: "{{ coredns_group }}"
+    mode: 0644
+  notify: Reload CoreDNS
+
+- name: Ensure CoreDNS started and enabled
+  systemd:
+    name: coredns
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: Replace resolv.conf old link
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+    mode: 0644

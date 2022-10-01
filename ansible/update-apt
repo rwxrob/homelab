@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ansible -i inventory all -bK -m command -a 'sudo apt-get update'

@@ -1,0 +1,5 @@
+- name: Download and install CoreDNS
+  unarchive:
+    src: "{{ coredns_download_url }}"
+    dest: "/usr/bin/"
+    remote_src: yes

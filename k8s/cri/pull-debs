@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+base="https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/1.25/xUbuntu_22.04/amd64"
+
+curl -sSLO "$base/cri-o_1.25.0~1_amd64.deb"
+
+base="https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/amd64/"
+
+
+debs=(
+  cri-o-runc_1.0.1~2_amd64.deb
+  cri-tools_1.25.0~0_amd64.deb
+  conmon_2.1.2~0_amd64.deb
+)
+
+for i in ${debs[@]}; do
+  curl -sSLO "$base/$i"
+done
+
+base="https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/all/"
+
+curl -sSLO "$base/containers-common_1-22_all.deb"
+

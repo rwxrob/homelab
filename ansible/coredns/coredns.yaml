@@ -1,0 +1,5 @@
+- name: Update homelab CoreDNS servers
+  hosts: control
+  become: True
+  roles:
+    - role: coredns

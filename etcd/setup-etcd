@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+token=token-01
+state=new
+host=$(hostname)
+
+declare -a hosts=(mini1 mini2 mini3)
+
+cluster=\
+${hosts[0]}=http://${hosts[0]}:2380,\
+${hosts[1]}=http://${hosts[1]}:2380,\
+${hosts[2]}=http://${hosts[2]}:2380
+
+echo etcd \
+  --name "$host" \
+  --initial-advertise-peer-urls "http://$host:2380" \
+  --listen-peer-urls "http://$host:2380" \
+  --listen-client-urls "http://$host:2379,http://127.0.0.1:2379" \
+  --advertise-client-urls "http://$host:2379" \
+  --initial-cluster-token "$token" \
+  --initial-cluster "$cluster" \
+  --initial-cluster-state new

@@ -1,0 +1,6 @@
+- include_tasks: coredns_pre.yaml
+- include_tasks: coredns_install.yaml
+- block:
+  - include_tasks: coredns_post.yaml
+  tags:
+    - coredns-config

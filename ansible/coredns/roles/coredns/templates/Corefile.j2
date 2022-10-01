@@ -1,0 +1,33 @@
+{% if coredns_main_zone is defined %}
+{{ coredns_main_zone }} {
+    etcd {
+        path /skydns
+        endpoint http://localhost:2379
+    }
+    prometheus
+    cache
+    loadbalance
+}
+{% endif %}
+.:53 {
+    errors
+    health {
+        lameduck 5s
+    }
+    ready
+    prometheus :9153
+    {% if coredns_forward_tls %}
+    forward . {% for ip in coredns_forward_servers %}{{ ip }} {% endfor %}{
+    	tls_servername {{ coredns_forward_tls_server_name }}
+        health_check 5s
+    }
+    {% else -%}
+    forward . {% for ip in coredns_forward_servers %}{{ ip }} {% endfor %}{
+        health_check 5s
+    }
+    {% endif -%}
+    cache 30
+    loop
+    reload
+    loadbalance
+}

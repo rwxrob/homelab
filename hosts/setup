@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+sudo ln -sf "$PWD/hosts" "/etc/hosts"

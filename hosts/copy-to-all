@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ansible -m copy -bK -a "src=hosts dest=/etc/hosts owner=root group=root mode='0644'" 'all:!kali'

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+ansible-playbook -i inventory -l all /dev/stdin << 'EOM'
+- name: ls
+  hosts: all
+  tasks:
+    - command: ls -1
+EOM
