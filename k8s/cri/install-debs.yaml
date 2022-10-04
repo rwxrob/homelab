@@ -23,3 +23,12 @@
       ansible.builtin.apt:
         deb: '/tmp/cri-debs/{{ item }}'
       loop: "{{ debs | list }}"
+
+    - name: enable crio
+      tags:
+        - enable
+      become: yes
+      ansible.builtin.systemd:
+        name: crio
+        enabled: true
+        state: started
