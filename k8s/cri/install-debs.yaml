@@ -1,0 +1,25 @@
+- name: copy debs in local dir to target
+  hosts: k8snodes
+
+  vars:
+    debs:
+      - conmon_2.1.2~0_amd64.deb
+      - containers-common_1-22_all.deb
+      - cri-o_1.25.0~1_amd64.deb
+      - cri-o-runc_1.0.1~2_amd64.deb
+      - cri-tools_1.25.0~0_amd64.deb
+
+  tasks:
+
+    - name: copy all debs in immediate directory to target
+      ansible.builtin.copy:
+        src: debs/
+        dest: /tmp/cri-debs/
+      tags:
+        - simple_copy
+
+    - name: install debs
+      become: yes
+      ansible.builtin.apt:
+        deb: '/tmp/cri-debs/{{ item }}'
+      loop: "{{ debs | list }}"

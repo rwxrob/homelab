@@ -9,7 +9,13 @@ all:
       hosts:
         mini[1:20]:
     tridents:
-      trident[1:6]:
+      hosts:
+        trident[1:6]:
+    k8snodes:
+      children:
+        control:
+        minis:
+        tridents:
     vms:
       hosts:
         anton:

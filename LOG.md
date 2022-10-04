@@ -1,5 +1,9 @@
 # Log of Work to Setup Homelab
 
+## Tuesday, October 4, 2022, 10:03:08AM EDT
+
+* Wrote ansible playbook to push container debs and install
+
 ## Saturday, October 1, 2022, 10:07:17AM EDT
 
 * Figured out how to force JSON Ansible output
