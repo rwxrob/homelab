@@ -1,0 +1,261 @@
+<h1 id="log-of-work-to-setup-homelab">Log of Work to Setup Homelab</h1>
+<ul>
+<li>Decided to go with <code>kube-vip</code> since Tanzu decided to replace HA Proxy with it</li>
+</ul>
+<p>Related:</p>
+<ul>
+<li>Building a Highly Available Kubernetes Cluster with kube-vip - SoByte<br />
+https://www.sobyte.net/post/2021-09/use-kube-vip-ha-k8s-lb/</li>
+</ul>
+<h2 id="thursday-october-6-2022-115822am-edt">Thursday, October 6, 2022, 11:58:22AM EDT</h2>
+<p>This session is largely about providing a single problematic argument to <code>kubeadm</code> when setting up control planes with “high availability”: <code>--control-plane-endpoint</code>. Ultimately, I decided to go with a virtual IP associated with a single specific hostname that is managed by <code>kube-vip</code> and ARP elections as a static pod.</p>
+<ul>
+<li>Add <code>apt mark</code> to <code>kubeadm</code>, <code>kubelet</code>, <code>kubectl</code></li>
+<li>Checked that <code>kubelet</code> is indeed crash-looping (as expected)</li>
+<li>Reverted to 1.24 for everything (was 1.25)</li>
+<li>Configure the cgroup driver</li>
+<li>Decided that CRI-O defaults for cgroup systemd are good</li>
+<li>Rabbit hole: ClusterAPI/<code>clusterctl</code> instead of <code>kubeadm</code> (eventually)</li>
+<li>“Static” Pods are pods that are not defined by API, but in local YAML</li>
+<li>Explorations of LB, HA and DNS round-robin, and <code>kube-vip</code></li>
+</ul>
+<h2 id="wednesday-october-5-2022-75556pm-edt">Wednesday, October 5, 2022, 7:55:56PM EDT</h2>
+<ul>
+<li>Install <code>kubeadm</code>, <code>kubelet</code>, <code>kubectl</code> with Ansible (from Internet)</li>
+<li>Decided not to explicitly block cluster from Internet access</li>
+<li>Planning on using k8s cluster for 24x7 pentest scanning</li>
+<li>Still, will “imaging” enterprise and use <code>deb</code>s for install</li>
+<li>Rule: nothing install on hosts directly from Internet</li>
+<li>Decided to be silly and create an Ubuntu internal mirror</li>
+<li>Discovered that mini1 and mini2 are LVM, so will use for mirrors</li>
+<li>Created group “repos” for mini1 and mini2</li>
+<li>Created a Ubuntu Server (Jammy) mirror and partition for it</li>
+<li>Decided to skip the nginx setup for repo mirror (for now)</li>
+<li>Decided to pretend “consulting” for small/mid-size company</li>
+<li>Decided on pretend scenario: academic think tank doing machine learning</li>
+<li>Such an organization is going to want unfettered access to Internet</li>
+<li>Opportunity to practice zero-trust at smaller scale</li>
+<li>Secure workstations and laptops without blocking outbound access</li>
+<li>Decided to seek better understanding of ZT at smaller scale</li>
+<li>Successfully installed <code>kubeadm</code>, <code>kubelet</code>, <code>kubectl</code></li>
+</ul>
+<h2 id="tuesday-october-4-2022-100308am-edt">Tuesday, October 4, 2022, 10:03:08AM EDT</h2>
+<ul>
+<li>Wrote ansible playbook to push container debs and install</li>
+</ul>
+<h2 id="saturday-october-1-2022-100717am-edt">Saturday, October 1, 2022, 10:07:17AM EDT</h2>
+<ul>
+<li>Figured out how to force JSON Ansible output</li>
+<li>Reorganized this homelab directory</li>
+<li>Added <code>setup</code> scripts for <code>hosts</code> and <code>~/.config/ansible</code></li>
+<li>Streamlined overall Ansible setup (still need playbooks later)</li>
+<li>Reviewed container runtimes and CRI</li>
+<li>Discussed the problems with Docker for Kubernetes</li>
+<li>Decided to go with CRI-O</li>
+<li>Learned that Kubernetes and CRI-O versions are synced (1.24 -&gt; 1.24)</li>
+<li>Decided to maintain local <code>.deb</code> packages as if pulling into enterprise</li>
+<li>Learned cri-tools contains crictl</li>
+<li>Learned conmon, containers-common are used by cri-o and cri-o-runc</li>
+<li>Added pull-debs script (and <code>*.debs</code>) to .gitignore</li>
+</ul>
+<p>Related:</p>
+<ul>
+<li>https://docs.ansible.com/ansible/latest/user_guide/intro_patterns.html#patterns-and-ad-hoc-commands</li>
+<li>Container Runtimes | Kubernetes Guide and Tutorial<br />
+https://www.containiq.com/post/container-runtimes</li>
+<li>https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/1.25/xUbuntu_22.04/amd64/</li>
+</ul>
+<h2 id="friday-september-30-2022-43701pm-edt">Friday, September 30, 2022, 4:37:01PM EDT</h2>
+<ul>
+<li>Start Kubernetes installation from scratch (<code>kubeadm</code>)</li>
+<li>Decided to disable swap even though 1.22 has “alpha” support for it</li>
+<li>Stole an Ansible playbook to disable swap (see <a href="ansible">ansible</a>)</li>
+<li>Discovered OPNsense will take an ssh command (ex: <code>ssh root@opnsense ls</code>)</li>
+<li>Decided <em>not</em> to do any Ansible management of OPNsense</li>
+<li>Created Ansible <a href="ansible/inventory">inventory</a> file (in git) with groups by hardware</li>
+<li>Did <code>ansible -i inventory all -m ping</code> to see all respond</li>
+<li>Did <code>ansible -i inventory all -m setup | tee setup.out</code></li>
+<li>Decided to use <code>-i inventory GROUP</code> by default</li>
+<li>Learned how to “dry run” an Ansible playbook</li>
+<li>Disabled swap from <a href="ansible/swapoff.yaml">swapoff.yaml</a></li>
+<li>Check mac address is unique with <a href="ansible/check-uniq-mac">script</a></li>
+<li>Check product_uuid is unique with <a href="ansible/check-uniq-product_uuid">script</a></li>
+<li>Discovered how to combine <a href="ansible/ls-all">bash script</a> calling <code>ansible-playbook</code></li>
+<li></li>
+</ul>
+<pre><code>ansible-playbook -i inventory -l all -K swapoff.yaml
+ansible -i inventory all -m command -a &#39;free -h&#39;
+ansible -i inventory all -m command -a &#39;ip link&#39;</code></pre>
+<p>Related:</p>
+<ul>
+<li>New in Kubernetes v1.22: alpha support for using swap memory | Kubernetes<br />
+https://kubernetes.io/blog/2021/08/09/run-nodes-with-swap-alpha/</li>
+<li>Ansible: How to disable swap : linuxadmin<br />
+https://www.reddit.com/r/linuxadmin/comments/flzx5r/ansible_how_to_disable_swap/</li>
+</ul>
+<h2 id="friday-september-30-2022-10129pm-edt">Friday, September 30, 2022, 1:01:29PM EDT</h2>
+<ul>
+<li>Tested Dell Optiplex IOPS (3443)</li>
+<li>Retested Tridents IOPS (41)</li>
+<li>Retested Mac Minis IOPS (84)</li>
+<li>Retested HP Z640 IOPS (294)</li>
+<li>Decided to use /etc/hosts instead of DNS for now</li>
+<li>Discovered /etc/hosts allows ssh command tab completion</li>
+<li>Considering setting up NFS for /home on everything</li>
+<li>Considering setting up Samba USB drive for /home on everything</li>
+</ul>
+<h2 id="thursday-september-29-2022-112619pm-edt">Thursday, September 29, 2022, 11:26:19PM EDT</h2>
+<ul>
+<li>Added Dell Optiplex control plane machines (arrived today)</li>
+</ul>
+<h2 id="wednesday-september-28-2022-32750pm-edt">Wednesday, September 28, 2022, 3:27:50PM EDT</h2>
+<ul>
+<li>Reconfigured network to use 192.168/16 (no IPv6)</li>
+<li>Using 192.168.1.1/16 for gateway</li>
+<li>Using 192.168.1/16 for DHCP (IPv4)</li>
+<li>Using 192.168.0/16 for static VMs</li>
+<li>Using 192.168.2/16 for Macs</li>
+<li>Using 192.168.3/16 for MSI Tridents</li>
+<li>Using 192.168.4/16 for HP (and future) VM host servers</li>
+<li>Using 192.168.42/16 for control plane nodes</li>
+<li>Using 8.8.8.8/8.8.4.4 for DNS until CoreDNS setup</li>
+<li>Upgraded OPNsense to 22.7.4 from 22.7 (known WAN IPv6 issues)</li>
+<li>Finished all cabling for rack 2</li>
+<li>Decided to buy HDMI keystone adapters for MSI Tridents</li>
+<li>Learned CIS security concern for IPv6 is dated and insignificant</li>
+<li>Created netplan.yaml template</li>
+</ul>
+<h2 id="tuesday-september-27-2022-32740pm-edt">Tuesday, September 27, 2022, 3:27:40PM EDT</h2>
+<ul>
+<li>Determined that initial <code>fio</code> output was completely wrong</li>
+<li>Got 100+ IOPS on Tridents</li>
+<li>Got 50+ regularly on Mac Minis</li>
+<li>Still keeping the control plane machines ordered with SSD</li>
+<li>Decided to use 172.16/12 (class B) instead of others</li>
+<li>Decided to soon drop IPv6 completely from LAN</li>
+<li>Decided to use example.com for domain since only relevant in docs</li>
+<li>Decided to use latest Kubernetes in personal cluster</li>
+<li>VMs on HP will be for testing different Kubernetes versions</li>
+<li>Current latest stable version of Kubernetes is 1.24 LTS</li>
+<li>Decided to use etcd version 3.5.5 (approved for LTS)</li>
+<li>Wrote <code>install-etcd</code> to get the latest version from GitHub</li>
+<li>Installed <code>jq</code> on target control planes</li>
+<li>Read about initial etcd setup</li>
+<li>Realized etcd (effectively) requires static IP addresses</li>
+<li>Abandoned notion of “just use DCHP registered names” for home lab</li>
+</ul>
+<p>Related:</p>
+<ul>
+<li>https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md</li>
+<li>https://github.com/kubernetes/kubernetes/blob/8cbe9e91c8b39de3dbb3b7e1eb76c586846721c5/cmd/kubeadm/app/constants/constants.go#L469-L483</li>
+<li>Clustering Guide | etcd<br />
+https://etcd.io/docs/v3.4/op-guide/clustering/</li>
+<li>https://github.com/kelseyhightower/etcd-production-setup</li>
+</ul>
+<h2 id="tuesday-september-27-2022-11436pm-edt">Tuesday, September 27, 2022, 1:14:36PM EDT</h2>
+<ul>
+<li>Ordered faster IOPS Dell Optiplex machines for control plane</li>
+<li>Going to use NFS and OpenEBS StorageClass</li>
+<li>Learn <code>strace</code>, it’s one of top 5 most important ops tools to learn</li>
+</ul>
+<p>Encountered annoying AF_INET6 errors that prevent command-line searching and research:</p>
+<pre><code>connect(3, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, &quot;2600:1f18:2489:8202:5162:2cb:b813:121f&quot;, &amp;sin6_addr), sin6_scope_id=0}, 28) = -1 EALREADY (Operation already in progress)
+pselect6(4, NULL, [3], NULL, {tv_sec=0, tv_nsec=100000000}, NULL) = 1 (out [3], left {tv_sec=0, tv_nsec=35265649})
+connect(3, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, &quot;2600:1f18:2489:8202:5162:2cb:b813:121f&quot;, &amp;sin6_addr), sin6_scope_id=0}, 28) = -1 ETIMEDOUT (Connection timed out)
+close(3)                                = 0
+socket(AF_INET, SOCK_STREAM, IPPROTO_TCP) = 3
+ioctl(3, FIONBIO, [1])                  = 0</code></pre>
+<p>I need to disable handing out DHCP6 addresses to my home network to fix other problems as well.</p>
+<p>Turns out this specific problem is all from ipv6 not working with Ubuntu Server and these applications and can be corrected by disabling IPV6 on a specific machine (which is also turns out, is a part of standard CIS hardening). This change is not persistent, however, unless you change it in /etc/sysctl.conf which is probably not necessary.</p>
+<pre><code>sudo sysctl net.ipv6.conf.all.disable_ipv6=1</code></pre>
+<p>Or could just do this for everything.</p>
+<pre><code>sudo ua enable cis</code></pre>
+<p>Related</p>
+<ul>
+<li>https://media.geeksforgeeks.org/wp-content/uploads/20220330131350/StatediagramforserverandclientmodelofSocketdrawio2-448x660.png</li>
+</ul>
+<h2 id="friday-september-23-2022-95709am-edt">Friday, September 23, 2022, 9:57:09AM EDT</h2>
+<p>Began etcd installation but discovered Mac Minis have 26 IOPS and MSI Tridents have 50. The recommended minimum is 50 from the etcd docs. This video has a lot of frustration as I try to even figure out how to determine a reliable IOPS value (ultimately with fio) but worth it.</p>
+<p>Other etcd installation notes:</p>
+<p>• Only “tier 1” supported OS is Linux on AMD64 • 2-4 cores is fine for less than “thousands of clients” • 8 GiB RAM for less than “thousands of clients” • “Disk speed is most critical factor” • Hardware recommendations | etcd https://etcd.io/docs/v3.5/op-guide/hardware/ • https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd</p>
+<p>First make a directory for <code>fio</code> to use.</p>
+<pre><code>mkdir test-data</code></pre>
+<p>Then start the test on a quiet system.</p>
+<pre><code>sudo fio --rw=write --ioengine=sync --fdatasync=1 --directory=test-data --size=22m --bs=2300 --name=mytest</code></pre>
+<h2 id="thursday-september-22-2022-82902pm-edt">Thursday, September 22, 2022, 8:29:02PM EDT</h2>
+<ul>
+<li><p>Dropping <code>fluff</code> because redundant to libvirt and Firecracker.</p></li>
+<li><p>Start to research Kubernetes installation starting with <code>etcd</code>. Decided on three external instances for HA simulation without too much overhead on these little Mac Minis.</p></li>
+</ul>
+<h2 id="thursday-september-22-2022-73650pm-edt">Thursday, September 22, 2022, 7:36:50PM EDT</h2>
+<ul>
+<li><p>Spent a lot of time calculating energy budget and wattages.</p></li>
+<li><p>Bought a Protectli Vault after getting freaked out by the Netgear Nighthawk firmware update. Downloaded and installed pfSense. Then a friend talked me into trying OPNsense so installed and prefer.</p></li>
+<li><p>Experienced strange freezes with <code>cpu_loop</code> caused by VMware with my <code>anton</code> VM. Turned out to be unrelated to new network changes. Probably from the KVM dying.</p></li>
+<li><p>Startec KVM died. Not sure why. Going to try to get a new one on warranty. Added two keyboards on my desk for now (one for work, one for home lab streaming/gaming rig).</p></li>
+<li><p>Made mistake of buying 20A PDU with plugs that don’t match sockets.</p></li>
+<li><p>Got everything cabled up. Turned up short an MSI power adapter, so waiting on that and my (lazy) purchase of 0.5’ and 1’ cables.</p></li>
+<li><p>Did the research in the apartment to find all the circuits and what they power. Bathroom receptacle are combined (2 of them) 20A. Turns out the master bedroom is on its own 15A circuit.</p></li>
+</ul>
+<p>Related:</p>
+<ul>
+<li>Protectli Vault FW4B - https://a.co/d/6OU2p3M</li>
+</ul>
+<h2 id="tuesday-september-13-2022-45348am-edt">Tuesday, September 13, 2022, 4:53:48AM EDT</h2>
+<ul>
+<li><p>Decided to use SSH as primary distributed configuration and RPC method. This means I have have entirely agent-less (ssh) configuration management dependency (using Ansible, etc.). This also means that eventually Bonzai agent, will have full ssh server support embedded into it as other prominent apps have done as well. SSH is the dominant networking protocol for such things. This also means will be abandoning plans to use GPG and/or mTLS/gRPC in Bonzai agent in favor of SSH.</p></li>
+<li><p>Install Ansible into workstation VM “control node” (anton, Ubuntu Server running on Windows 10 with VMware Workstation Pro).</p></li>
+<li><p>After hearing from community, decided to keep only inventory/hosts in dot files and put the rest of my custom playbook collection in a separate rwxrob/ansible repo.</p></li>
+<li><p>Create (or copy) an Ansible playbook to install CoreDNS on all three redundant servers that forwards to local router.</p></li>
+<li><p>Hate using Cloudflare (1.1.1.1/1.0.0.1) or Google (8.8.8.8/8.8.4.4) DNS (or any other centralized DNS) for anything, but gave in for Cloudflare since fastest. Such centralization is bad for the Internet, as we’ve seen when large sections of the Internet went dark (more than once) when CloudFlare when down.</p></li>
+<li><p>Consider alternative DNS providers (instead of ISP, which might be using Cloudflare or Google without us knowing).</p></li>
+<li><p>Determined that DNS over TLS (DoT) or HTTPS (DoH) isn’t worth it for me (right now) but will experiment with it later.</p></li>
+<li><p>Run Ansible playbook to install CoreDNS on mini1, mini2, mini3.</p></li>
+<li><p>Decided against any adblocking/pie-hole stuff because of bad experience in the past with it being overly aggressive and just a PITA to keep configured properly.</p></li>
+<li><p>Decided on <code>lab.example.com</code> as fully qualified local zone domain (suggested by <span class="citation" data-cites="j33pguy">@j33pguy</span>) so that examples and streaming and documentation all sync up from home. I won’t be using a fully qualified domain at all for most things, but when I do, there’s a good chance I’m going to want to document it for public consumption.</p></li>
+</ul>
+<p>Related:</p>
+<ul>
+<li><p>Cloudflare Down Again<br />
+https://www.theverge.com/2022/6/21/23176519/cloudflare-outage-june-2022-discord-shopify-fitbit-peleton</p></li>
+<li><p>The Best Free and Public DNS Servers (September 2022)<br />
+https://www.lifewire.com/free-and-public-dns-servers-2626062</p></li>
+<li><p>Dropbear SSH<br />
+https://matt.ucc.asn.au/dropbear/dropbear.html</p></li>
+<li><p>What is DNS over TLS (DoT)? | DDI (Secure DNS, DHCP, IPAM) | Infoblox<br />
+https://www.infoblox.com/glossary/dns-over-tls-dot/</p></li>
+<li><p>What is DNS over HTTPS? Definition, Implementation, Benefits, and More<br />
+https://heimdalsecurity.com/blog/dns-over-https-doh/</p></li>
+<li><p>nielux: I learned Ansible from Jef Geerling, 10/10 would recommend his youtube series/book about it</p></li>
+<li><p>Roles — Ansible Documentation<br />
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html</p></li>
+<li><p>https://www.oreilly.com/library/view/learning-coredns/9781492047957/ch04.html</p></li>
+</ul>
+<h2 id="monday-september-12-2022-55443pm-edt">Monday, September 12, 2022, 5:54:43PM EDT</h2>
+<ul>
+<li><p>Reviewed and update inventory of all available hardware.</p></li>
+<li><p>Discussed future power consumption needs and UPS possibilities.</p></li>
+<li><p>Determined to install CoreDNS before <code>etcd</code> so that nothing in the entire architecture does <em>not</em> have a DNS name. Thanks to <span class="citation" data-cites="ryanwilcox">@ryanwilcox</span> for the reminder that doing so would prevent decision making now about the subnet and VLAN architecture. CoreDNS, which is written in Go, works very nicely since there is a Kubernetes plugin to use it externally (normally Kubernetes uses it internally, by default). Being in Go means that I can actually read and understand the source of the most important DNS server in the entire cloud native landscape. Also, it doesn’t suck like Bind.</p></li>
+<li><p>CoreDNS: DNS and Service Discovery<br />
+<a href="https://coredns.io/" class="uri">https://coredns.io/</a></p></li>
+<li><p>Decided to use the <code>systemd</code> deployment since it has to be reliably up and managed as a service even though others may run it from a container. <a href="https://github.com/coredns/deployment" class="uri">https://github.com/coredns/deployment</a> <code>man sysusers.d</code></p></li>
+</ul>
+<h4 id="fixme">FIXME</h4>
+<h2 id="get-server-hardware">Get server hardware</h2>
+<h2 id="decide-network-architecture-and-system-names">Decide network architecture and system names</h2>
+<h2 id="build-rack-and-install-hardware">Build rack and install hardware</h2>
+<h2 id="install-operating-systems-on-servers">Install operating systems on servers</h2>
+<h2 id="configure-secure-shell-on-all-servers">Configure secure shell on all servers</h2>
+<p>Yes it’s annoying to have to type the password every time, but that can also be skipped if you prefer.</p>
+<pre><code>for i in `z yq &#39;.hwnodes[].name&#39;; do &#39;copy-ssh-id &quot;$i&quot;&#39;; done</code></pre>
+<p>As soon as you have ssh keys on everything the rest is easier (or use <code>sshpass</code> if you really want).</p>
+<p>Once you have keys on everything then disable ssh passwords completely.</p>
+<pre><code>PasswordAuthentication no
+KbdInteractiveAuthentication no</code></pre>
+<p>Note that the latter one used to be <code>ChallengeResponseAuthentication</code> but that name has been deprecated.</p>
+<h2 id="setup-nfs-on-a-server">Setup NFS on a server</h2>
+<p>Choose a server with reasonable amount of storage space (<code>trident1</code>)</p>
+<p>Install the NFS dependencies.</p>
+<pre><code>sudo apt-get update
+sudo apt install nfs-kernel-server</code></pre>
+<h2 id="setup-main-kubernetes-cluster">Setup main Kubernetes cluster</h2>

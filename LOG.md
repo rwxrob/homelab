@@ -1,5 +1,84 @@
 # Log of Work to Setup Homelab
 
+## Friday, October 7, 2022, 10:50:23AM EDT
+
+* Create control nodes using `kubeadm --control-plane-endpoint k8s:6443`
+* Quick review of resources available during cert exam
+* Determined CNCF certification is a fucking joke (actively against)
+* Decided (and confirmed with hiring people) actual experience preferred
+* Learned some control plane pods are ***static*** pods:
+  `controller-manager`, `scheduler`, `kube-apiserver` as well as `etcd`
+  (by default)
+* CoreDNS runs as two pods on initial control-plane node (by default)
+* Decided on Calico for CNI (will install later)
+* Decided to use standard, "stacked", internal `etcd` (not external)
+* Rethinking decision to use `kube-vip` vs `haproxy`/`keepalived`
+* `kube-vip` is untestable until `kubelet` is out of crash loop
+* `haproxy` is a systemd daemon that is immediately testable, but separate
+* Proceeding with `kube-vip` as static pod for now, but might change
+* I prefer having `haproxy` (deployed with Ansible) separate, reusable
+* For some reason, I stopped in CRI setup before "Install and config prereqs"
+
+Related:
+
+* https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/
+* https://github.com/kubernetes/kubeadm/blob/main/docs/ha-considerations.md
+* https://github.com/kubernetes/kubeadm/issues/1685
+* https://github.com/kubernetes/kubeadm/issues/1931
+
+## Friday, October 6, 2022, 9:00:15PM EDT
+
+* Decided to go with `kube-vip` since Tanzu decided to replace HA Proxy with it
+* Struggled with realization that I need an "admin" cluster
+* Reminded not to put container registry (Harbor) in "prod" cluster
+* Revisit container runtimes in order to pull `kube-vip` static pod image
+* Learned that ghcr.io is GitHub's container registry
+* Installed `kube-vip` container from ghcr.io
+* Decided that `crictl` is not quite enough, need to install `nerdctl`/`podman`
+* Installed `podman` and found it much more "docker"-like
+
+Related:
+
+* https://kube-vip.io/docs/installation/static/
+* https://github.com/kubernetes/kubeadm/blob/main/docs/ha-considerations.md
+
+## Thursday, October 6, 2022, 11:58:22AM EDT
+
+This session is largely about providing a single problematic argument to
+`kubeadm` when setting up control planes with "high availability":
+`--control-plane-endpoint`. Ultimately, I decided to go with a virtual
+IP associated with a single specific hostname that is managed by
+`kube-vip` and ARP elections as a static pod.
+
+* Add `apt mark` to `kubeadm`, `kubelet`, `kubectl`
+* Checked that `kubelet` is indeed crash-looping (as expected) 
+* Reverted to 1.24 for everything (was 1.25)
+* Configure the cgroup driver
+* Decided that CRI-O defaults for cgroup systemd are good
+* Rabbit hole: ClusterAPI/`clusterctl` instead of `kubeadm` (eventually)
+* "Static" Pods are pods that are not defined by API, but in local YAML
+* Explorations of LB, HA and DNS round-robin, and `kube-vip`
+
+## Wednesday, October 5, 2022, 7:55:56PM EDT
+
+* Install `kubeadm`, `kubelet`, `kubectl` with Ansible (from Internet)
+* Decided not to explicitly block cluster from Internet access
+* Planning on using k8s cluster for 24x7 pentest scanning
+* Still, will "imaging" enterprise and use `deb`s for install
+* Rule: nothing install on hosts directly from Internet
+* Decided to be silly and create an Ubuntu internal mirror
+* Discovered that mini1 and mini2 are LVM, so will use for mirrors
+* Created group "repos" for mini1 and mini2
+* Created a Ubuntu Server (Jammy) mirror and partition for it
+* Decided to skip the nginx setup for repo mirror (for now)
+* Decided to pretend "consulting" for small/mid-size company
+* Decided on pretend scenario: academic think tank doing machine learning
+* Such an organization is going to want unfettered access to Internet
+* Opportunity to practice zero-trust at smaller scale
+* Secure workstations and laptops without blocking outbound access
+* Decided to seek better understanding of ZT at smaller scale
+* Successfully installed `kubeadm`, `kubelet`, `kubectl`
+
 ## Tuesday, October 4, 2022, 10:03:08AM EDT
 
 * Wrote ansible playbook to push container debs and install

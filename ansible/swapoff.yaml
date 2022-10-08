@@ -17,3 +17,13 @@
         replace: '#\1\2\3swap\4'
         backup: yes
 
+# - name: disable swap
+#   ansible.builtin.shell: swapoff -a
+#   register: swapoff
+#   changed_when: swapoff.stdout != ""
+
+# - name: remove swap from fstab
+#   ansible.builtin.lineinfile:
+#     path: /etc/fstab
+#     regex: 'swap'
+#     state: absent

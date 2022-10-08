@@ -16,6 +16,9 @@ all:
         control:
         minis:
         tridents:
+    repos:
+      hosts:
+        mini[1:2]:
     vms:
       hosts:
         anton:

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+ansible -m command -a 'df -h' all
+

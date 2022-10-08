@@ -1,0 +1,49 @@
+- name: install kubeadm, kublet, kubectl
+  hosts: k8snodes
+  vars:
+    k8sversion: 1.24
+  become: yes
+  tasks:
+
+    - name: install dependencies
+      tags:
+        - deps
+      ansible.builtin.apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+
+    - name: fetch the key
+      ansible.builtin.get_url:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+
+    - name: add the k8s repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main"
+        state: present
+
+    - name: install the extra cmds
+      tags:
+        - aptinstall
+      ansible.builtin.apt:
+        pkg:
+          - 'kubeadm={{ k8sversion }}.*'
+          - 'kubelet={{ k8sversion }}.*'
+          - 'kubectl={{ k8sversion }}.*'
+        allow_downgrade: yes
+        allow_change_held_packages: yes
+
+    - name: mark pkgs so they don't autoupdate
+      tags:
+        - mark
+      ansible.builtin.dpkg_selections:
+        name: '{{ item }}'
+        selection: hold
+      loop:
+        - kubeadm
+        - kubelet
+        - kubectl
+
+

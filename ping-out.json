@@ -1,0 +1,760 @@
+{
+    "custom_stats": {},
+    "global_custom_stats": {},
+    "plays": [
+        {
+            "play": {
+                "duration": {
+                    "end": "2022-10-07T01:59:37.059785Z",
+                    "start": "2022-10-07T01:59:17.927305Z"
+                },
+                "id": "79d74e1f-f3cd-5633-693e-000000000026",
+                "name": "Ansible Ad-Hoc"
+            },
+            "tasks": [
+                {
+                    "hosts": {
+                        "anton": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "control1": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "control2": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "control3": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "hpz640": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "kali": {
+                            "action": "ping",
+                            "changed": false,
+                            "msg": "Failed to connect to the host via ssh: ssh: connect to host kali port 22: No route to host",
+                            "unreachable": true
+                        },
+                        "mini1": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini10": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini11": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini12": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini13": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini14": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini15": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini16": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini17": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini18": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini19": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini2": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini20": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini3": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini4": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini5": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini6": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini7": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini8": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "mini9": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "trident1": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "trident2": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "trident3": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "trident4": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "trident5": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        },
+                        "trident6": {
+                            "_ansible_no_log": null,
+                            "action": "ping",
+                            "ansible_facts": {
+                                "discovered_interpreter_python": "/usr/bin/python3"
+                            },
+                            "changed": false,
+                            "invocation": {
+                                "module_args": {
+                                    "data": "pong"
+                                }
+                            },
+                            "ping": "pong"
+                        }
+                    },
+                    "task": {
+                        "duration": {
+                            "end": "2022-10-07T01:59:37.059785Z",
+                            "start": "2022-10-07T01:59:17.999472Z"
+                        },
+                        "id": "79d74e1f-f3cd-5633-693e-000000000028",
+                        "name": "ping"
+                    }
+                }
+            ]
+        }
+    ],
+    "stats": {
+        "anton": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "control1": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "control2": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "control3": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "hpz640": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "kali": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 0,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 1
+        },
+        "mini1": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini10": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini11": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini12": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini13": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini14": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini15": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini16": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini17": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini18": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini19": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini2": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini20": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini3": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini4": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini5": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini6": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini7": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini8": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "mini9": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "trident1": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "trident2": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "trident3": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "trident4": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "trident5": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        },
+        "trident6": {
+            "changed": 0,
+            "failures": 0,
+            "ignored": 0,
+            "ok": 1,
+            "rescued": 0,
+            "skipped": 0,
+            "unreachable": 0
+        }
+    }
+}

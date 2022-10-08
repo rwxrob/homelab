@@ -1,0 +1,2 @@
+#!/bin/bash
+crictl run "ghcr.io/kube-vip/kube-vip:$KVVERSION"

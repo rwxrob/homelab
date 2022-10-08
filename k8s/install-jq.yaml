@@ -1,0 +1,10 @@
+- name: install jq
+  hosts: all
+  become: yes
+  tasks:
+    - name: install jq
+      ansible.builtin.apt:
+        pkg:
+          - jq
+
+

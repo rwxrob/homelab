@@ -1,0 +1,261 @@
+mini1 | CHANGED | rc=0 >>
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              384M  1.4M  382M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv   98G  8.6G   85G  10% /
+tmpfs                              1.9G     0  1.9G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          2.0G  247M  1.6G  14% /boot
+/dev/sda1                          1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs                              384M  4.0K  384M   1% /run/user/1000
+hpz640 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs            13G  2.3M   13G   1% /run
+/dev/sda2       468G   14G  431G   3% /
+tmpfs            63G     0   63G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs            13G  8.0K   13G   1% /run/user/1000
+control3 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           1.6G  1.5M  1.6G   1% /run
+/dev/sda2       233G  7.9G  213G   4% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           1.6G  4.0K  1.6G   1% /run/user/1000
+control1 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           1.6G  1.5M  1.6G   1% /run
+/dev/sda2       233G  7.4G  214G   4% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           1.6G  4.0K  1.6G   1% /run/user/1000
+control2 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           1.6G  1.5M  1.6G   1% /run
+/dev/sda2       233G  7.2G  214G   4% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           1.6G  4.0K  1.6G   1% /run/user/1000
+mini2 | CHANGED | rc=0 >>
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              381M  1.4M  379M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv   98G  7.7G   86G   9% /
+tmpfs                              1.9G     0  1.9G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          2.0G  248M  1.6G  14% /boot
+/dev/sda1                          1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs                              381M  4.0K  381M   1% /run/user/1000
+mini4 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini5 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini6 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini7 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.8G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini3 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.3M  379M   1% /run
+/dev/sda2       457G  9.8G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini10 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           783M  1.4M  782M   1% /run
+/dev/sda2       915G  9.9G  859G   2% /
+tmpfs           3.9G     0  3.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           783M  4.0K  783M   1% /run/user/1000
+mini9 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini8 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini11 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini12 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini13 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini15 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini14 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini16 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini17 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+mini18 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           384M  1.4M  382M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           384M  4.0K  384M   1% /run/user/1000
+mini19 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           384M  1.4M  382M   1% /run
+/dev/sda2       457G  9.7G  424G   3% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           384M  4.0K  384M   1% /run/user/1000
+mini20 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           381M  1.4M  379M   1% /run
+/dev/sda2       457G  6.9G  427G   2% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs           381M  4.0K  381M   1% /run/user/1000
+trident1 | CHANGED | rc=0 >>
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              790M  1.5M  789M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv   98G  8.9G   85G  10% /
+tmpfs                              3.9G     0  3.9G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          2.0G  265M  1.6G  15% /boot
+/dev/sda1                          1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs                              790M  4.0K  790M   1% /run/user/1000
+trident2 | CHANGED | rc=0 >>
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              790M  1.5M  789M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv   98G  7.8G   86G   9% /
+tmpfs                              3.9G     0  3.9G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          2.0G  146M  1.7G   8% /boot
+/dev/sda1                          1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs                              790M  4.0K  790M   1% /run/user/1000
+trident3 | CHANGED | rc=0 >>
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              790M  1.5M  789M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv   98G  8.6G   85G  10% /
+tmpfs                              3.9G     0  3.9G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          2.0G  265M  1.6G  15% /boot
+/dev/sda1                          1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs                              790M  4.0K  790M   1% /run/user/1000
+trident5 | CHANGED | rc=0 >>
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              790M  1.5M  789M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv   98G  8.6G   85G  10% /
+tmpfs                              3.9G     0  3.9G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          2.0G  265M  1.6G  15% /boot
+/dev/sda1                          1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs                              790M  4.0K  790M   1% /run/user/1000
+trident4 | CHANGED | rc=0 >>
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              790M  1.5M  788M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv   98G  7.7G   86G   9% /
+tmpfs                              3.9G     0  3.9G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          2.0G  248M  1.6G  14% /boot
+/dev/sda1                          1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs                              790M  4.0K  790M   1% /run/user/1000
+trident6 | CHANGED | rc=0 >>
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              790M  1.5M  789M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv   98G  8.7G   85G  10% /
+tmpfs                              3.9G     0  3.9G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          2.0G  265M  1.6G  15% /boot
+/dev/sda1                          1.1G  5.3M  1.1G   1% /boot/efi
+tmpfs                              790M  4.0K  790M   1% /run/user/1000
+anton | CHANGED | rc=0 >>
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              389M  3.1M  386M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv  294G   30G  253G  11% /
+tmpfs                              1.9G  124K  1.9G   1% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          1.8G  247M  1.4G  16% /boot
+tmpfs                              389M  4.0K  389M   1% /run/user/1001
+kali | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh: ssh: connect to host kali port 22: No route to host",
+    "unreachable": true
+}
