@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ansible -i inventory all -bK \
+ansible all -bK \
   -m command -a 'cat /sys/class/dmi/id/product_uuid' |\
 grep -v '>>' | sort | uniq -c
 

@@ -44,7 +44,8 @@ my install scripts and other stuff, but this directory contains stuff
 for setting up and managing my homelab. Playbooks that have re-usable
 value will eventually get their own repos.
 
-I've decide to always use `-i inventory` just to be explicit about it.
+Keep in mind that all the host and group lists are from my custom
+inventory.
 
 * Setting Up And Executing Basic Ansible Playbook  
   https://www.c-sharpcorner.com/article/setting-up-and-executing-basic-ansible-playbook/
