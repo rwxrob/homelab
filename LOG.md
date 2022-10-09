@@ -1,10 +1,57 @@
 # Log of Work to Setup Homelab
 
+## Sunday, October 9, 2022, 12:46:08AM EDT
+
+* Which CIDR for clusters? How will this affect network topology?
+* What does my `kubeadm init` command actually look like?
+* ip route show | grep default (for implied --apiserver-advertise-address)
+* Reaffirmed access to Internet for control planes in imaginary scenario
+* Decided to try an "air-gapped" deployment later in life
+* Accepted the default image repository since not "air-gapped"
+* Realized that `kubeadm join` tokens expire in 24h by default
+* Tokens can be reissued for joins with `kubeadm token` command
+* Learned that any certs in `--cert-dir` will automatically be used
+* Decided to focus entirely on getting good with PKI (certs) next
+
+Related:
+
+* https://kubernetes.io/docs/setup/best-practices/certificates/
+* https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/
+
+## Saturday, October 8, 2022, 10:42:10AM EDT
+
+* Reconfirm `kube-vip` load balancer is working
+* Finally understand scope and reason for "static" pods
+* Picking Calico over Cilium CNI?
+* Learning more about eBPF (formerly, "Extended Berkeley Packet Filter")
+* eBPF no longer matches the original acronym!
+* No more `kube-proxy` (which just manages iptables) but must disable
+* Check to see if SELinux enables by default on Ubuntu Server
+* Is SELinux required by *any* enterprise scale deployment?
+* GKE says this: “Note: SELinux is not supported on GKE. Use AppArmor instead.”
+* Big thanks to the Twitch community for facilitating this discussion
+* "just don't paint your company out of getting those juicy gov contracts, lol"
+* Taniwha says both apparmor and SELinux fulfill gov requirements
+* Learned that CNI installation not required to join nodes to cluster
+* kubeadm token create --print-join-command (for when you forget)
+* Confirmed that networking between nodes (kubeletes) works without CNI
+* Reminded that CNI is *only for container networking* (not node network)
+* "Btw, I usually delete everything under /etc/cni/net.d, that's some
+  default networking plugins that you don't need once you install a
+  CNI." (lbgdn)
+* Learned about RFC 1918 and not overusing subnet ranges
+
+Related:
+
+* https://cloud.google.com/kubernetes-engine/docs/concepts/security-overview
+* https://github.com/cilium/tetragon
+* https://ubuntu.com/gov
+
 ## Friday, October 7, 2022, 10:50:23AM EDT
 
 * Create control nodes using `kubeadm --control-plane-endpoint k8s:6443`
 * Quick review of resources available during cert exam
-* Determined CNCF certification is a fucking joke (actively against)
+* Determined CNCF certification is a joke (actively against)
 * Decided (and confirmed with hiring people) actual experience preferred
 * Learned some control plane pods are ***static*** pods:
   `controller-manager`, `scheduler`, `kube-apiserver` as well as `etcd`
@@ -26,7 +73,7 @@ Related:
 * https://github.com/kubernetes/kubeadm/issues/1685
 * https://github.com/kubernetes/kubeadm/issues/1931
 
-## Friday, October 6, 2022, 9:00:15PM EDT
+## Thursday, October 6, 2022, 9:00:15PM EDT
 
 * Decided to go with `kube-vip` since Tanzu decided to replace HA Proxy with it
 * Struggled with realization that I need an "admin" cluster
