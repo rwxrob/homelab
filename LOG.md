@@ -1,5 +1,220 @@
 # Log of Work to Setup Homelab
 
+## Thursday, October 20, 2022, 5:23:37PM EDT
+
+* Overview of final VLAN setup on 198.18/15 divided in two
+* Fun with Excalidraw (thanks for the free sub)
+* Discovered that OPNsense is actually ISC DHCPD (Talos compat)
+* Realized so many practical reasons to "air gap" main lab network
+
+Related:
+
+* https://app.excalidraw.com/l/6rjSvoGlOkc/1njNB1sKmj8
+
+## Wednesday, October 19, 2022, 1:27:46AM EDT
+
+* Untagged VLAN setup incredibly easy with netplan, just add address
+* Add OPNsense encrypted configuration backup
+* Add whiteboard for reference
+* Setup safer SSH keys with passphrases and ssh-agent ForwardAgent
+* Add AddKeysToAgent yes to ~/.ssh/config
+* Discovered git-crypt for storing secrets in public git repos safely
+* Decided to go with larger VLAN subnets and drop VLAN 1 (just 'cuz)
+* Started researching KVM best practices from command line on Ubuntu
+
+Related
+
+* git-crypt - transparent file encryption in git  
+  https://www.agwa.name/projects/git-crypt/
+* How to Create Virtual Machines in Linux Using KVM (Kernel-based Virtual Machine)? - GeeksforGeeks  
+  https://www.geeksforgeeks.org/how-to-create-virtual-machines-in-linux-using-kvm-kernel-based-virtual-machine/
+
+## Thursday, October 13, 2022, 9:59:58AM EDT
+
+* Overview of etcd Kubernetes backups
+* Learned that Talos has own etcd backup procedure
+
+Related:
+
+* Howto backup and restore etcd with talos · Discussion \#3439 · siderolabs/talos · GitHub  
+  https://github.com/siderolabs/talos/discussions/3439
+
+## Wednesday, October 12, 2022, 12:20:51AM EDT
+
+* Check setup requirements for Talos/Sidero
+* What is tcell?
+* Why is the Talos logo so bad?
+* Started the Talos "Quick Start" guide (but just Linux)
+* Learned difference between Talos, Sidero, and Sidero Metal
+* Learned that DHCP is required
+* Reviewed how iPXE works
+* Tour of OPNsense
+* A brief mention of shodan.io
+* Completely random rant against UEFI
+* Requires a separate, highly-available, "admin" k8s cluster
+* Concluded to work with Firecracker VM server next
+* Seems like four clusters are needed: admin, inf, prod, dev
+* Concluded to run "admin" k8s cluster from hpz640
+* Concluded to run Harbor in "infra" cluster
+
+
+Related:
+
+* https://www.sidero.dev/v0.3/getting-started/
+* https://opnsense.org/
+* https://a.co/d/0k1B7rB
+* Why is iPXE better that good old Plain Vanilla PXE?  
+  https://kb.2pintsoftware.com/help/why-is-ipxe-better-that-good-old-plain-vanilla-pxe
+* https://github.com/opnsense/core/pull/5385
+* https://ipxe.org/crypto
+* http://boot.ipxe.org/demo/boot.php
+
+## Tuesday, October 11, 2022, 2:22:18PM EDT
+
+* Started decision tree for Kubernetes
+* Realized CRI-O requires creating pod wrapper for containers to run
+  with crictl (no runtime)
+* Realized containerd is probably better for most since ctr is a drop-in
+  replacement for docker (CRI-O does not have the same)
+* Decided to give Talos/Sidero another closer look
+* Decided to run run Harbor outside of Kubernetes
+
+Related:
+
+* https://en.wikipedia.org/wiki/Virtual_Router_Redundancy_Protocol
+* https://cloud.redhat.com/blog/crictl-vs-podman
+* https://github.com/kube-vip/kube-vip/issues/130
+* https://www.talos.dev/v1.2/talos-guides/network/vip/
+
+## Tuesday, October 11, 2022, 12:23:52PM EDT
+
+* Even though kubeadm init does certs internally, they still expire
+* Decided to go with Vault for PKI key generation (for now)
+* CKA cert is *not* for beginners
+* KCNA is for beginners
+* Still annoyed "Getting Started" doesn't even mention certs
+
+## Monday, October 10, 2022, 7:53:58PM EDT
+
+* Install and configure Hashicorp Vault
+* Organize Ansible stuff into roles, templates, etc.
+* Redo home DNS to be fully qualified (lab|home).rwx.gg
+* Create homelab root and intermediate CAs in Vault using Ansible
+* Nice things about declarative infrastructure (audit-ability)
+* First impression of Vault: "password manager on steroids"
+* CSR: "Certificate Signing Request"
+* CRL: "Certificate Revocation List"
+* ACME: "Automatic Certificate Management Environment"
+* PKIX: (another way to say x.509 certificates)
+* Distracted looking at source of Vault (with strace)
+* Is it safe to save secrets in environment variables?
+* Realized Vault is that crap that injects a sidecar in K8S, very sad
+* PKI involves more more that Kubernetes requiring specific use cases
+* Learned (mind blown) by Root CA rotation strategies, some daily/hourly
+* Still undecided about necessity of Vault over Step CA or simpler
+
+PKI Use Cases
+
+  * issue root CA
+  * protect root CA
+  * rotate root CA
+  * issue intermediate CA
+  * issue leaf certificates with specific properties (perhaps profiled) 
+  * manage certificate signing requests
+  * revoke any CA or cert (maintain CRL)
+  * remove expired certificates
+  * notify of certification expirations
+  * audit and list all assets
+
+Related:
+
+* https://www.hashicorp.com/solutions/zero-trust-security
+* https://www.rfc-editor.org/rfc/rfc8555
+* https://unix.stackexchange.com/questions/622471/what-is-the-equivalent-proc-process-pid-environ-file-in-aix
+* https://learn.hashicorp.com/tutorials/vault/pki-engine
+* https://learn.hashicorp.com/tutorials/vault/pki-engine-external-ca?in=vault/secrets-management 
+
+## Monday, October 10, 2022, 11:00:11AM EDT
+
+* Learned that kube-proxy isn't a proxy at all (no network comms)
+* Apparently, kube-proxy "once" did networking and not just "iptables"
+* Many certs are *only* in the config files (others have `.crt` files)
+* Using the "optional" kubeadm config method is not "optional" at all
+* Using kubeadm.yaml (and output) gives advantage of saving what you did
+* Just backing up etcd *could* be enough if *all* k8sapps are emphemeral
+* Remembered crictl ps -o yaml for seeing running containers api-like YAML
+* Remembered crictl pods -o yaml for seeing pods with local annotations
+* Seeing static pods on actual nodes is a thing (mirrors are mirrors)
+* Decided to invest time in creating full Ansible project for
+  kubeadm.yaml template and the rest
+* Learned that Hashcorp Vault it supported by Charmed K8S, etc.
+* Decided to do a PKI deployment using Vault with Ansible
+
+Related:
+
+* https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/#kubelet-serving-certs
+* https://kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta2/
+* https://opencredo.com/blogs/securing-kafka-using-vault-pki/
+
+## Monday, October 10, 2022, 2:43:44AM EDT
+
+* Learned about Hardware Security Modules (HSM)
+* Revisiting tenets of zero-trust architecture
+* Considering purchasing a USB HSM from Entrust (via PKISolutions)
+* Review the standard static pods of Kubernetes components
+* crictl bypasses API for "get pod" (no config.mirror annotation)
+* config.source: file means "static pod" (/etc/kubernetes/manifests)
+* config.source: api means "regular pod" (kubectl)
+* Decided to redo homelab network naming and default search domain
+* Appears kube-proxy (static pod) is fundamentally dependent on CNI
+
+Related:
+
+* What is an HSM? What are the benefits of using an HSM? \| Encryption Consulting  
+  https://www.encryptionconsulting.com/education-center/what-is-an-hsm/
+* What is a Hardware Security Module?  
+  https://www.techtarget.com/searchsecurity/definition/hardware-security-module-HSM
+* Top 6 benefits of zero-trust security for businesses  
+  https://www.techtarget.com/searchsecurity/answer/What-are-the-cybersecurity-benefits-of-zero-trust
+* HSM Key Management Solved with PKI Spotlight  
+  https://www.pkisolutions.com/hsm-key-management-solved-with-pki-spotlight/
+* https://www.pkisolutions.com/products/hardware-security-modules
+* https://www.entrust.com/digital-security/hsm/products/nshield-hsms/nshield-edge
+* Create static Pods \| Kubernetes  
+  https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/
+
+## Sunday, October 9, 2022, 12:11:07PM EDT
+
+* Revisited history of how we got to needing cert skills?
+* Decided to use `openssl` and `kubeadm cert` as tools
+* Confirmed that Kubelet IP used by API client (in server) is assigned
+  by network outside of Kubernetes (in /etc/hosts in my case today)
+* Need to confirm node "External IPs" are *only* for cloud providers
+* Quick introduction to "mutual TLS"
+* mTLS: "Server takes client's cert as the authentication."
+* CAs like Letsencrypt do not allow the type of certs needed for k8s
+* Internet-facing services will have own certs with Ingress
+* Created visual of cert/ca relationship and talked through organization
+* openssl x509 -in ca.crt -noout -text
+* Explained use of /etc/hosts (tab completion) over DNS
+* Decided to use FQDN for --control-plane-endpoint
+* Rethinking use of example.com, perhaps lan.rwx.gg instead
+* VIP gives additional IP with /32 to distinguish but shows in ip -c a
+* A /32 is a "subnet of one" usually signifying something special
+* A PEM ("priv enhanced mail") is just a format for containing a TLS
+  cert (meta and key)
+* PEM is apparently also used for ASCII-armored GPG and ssh keys
+* Self-signed (root CA, etc): "Issuer CN"  === "Subject CN"
+* Also look for CA:TRUE
+* X509v3 Key Usage: "critical" is *not* set on certs from LE (for example)
+
+Related:
+
+* https://kubernetes.io/docs/setup/best-practices/certificates/
+* https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/
+* https://stackoverflow.com/questions/44877606/is-grpchttp-2-faster-than-rest-with-http-2/44937371#44937371
+* https://excalidraw.com/#json=0i8rQvdd3W6QcWVnZJcPt,xmTb3b9kAKngblTqrFDAag
+
 ## Sunday, October 9, 2022, 12:46:08AM EDT
 
 * Which CIDR for clusters? How will this affect network topology?
@@ -12,11 +227,6 @@
 * Tokens can be reissued for joins with `kubeadm token` command
 * Learned that any certs in `--cert-dir` will automatically be used
 * Decided to focus entirely on getting good with PKI (certs) next
-
-Related:
-
-* https://kubernetes.io/docs/setup/best-practices/certificates/
-* https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/
 
 ## Saturday, October 8, 2022, 10:42:10AM EDT
 
