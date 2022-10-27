@@ -69,6 +69,7 @@ running pentesting scans intrusion detection experiments (honeypots).
 * CRI-O
 * Kubernetes
 * Calico
+* Goldilocks
 * MetalLB
 * Node Feature Discovery (NFD)
 * nVidia GPU Feature Discovery
