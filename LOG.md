@@ -1,5 +1,13 @@
 # Log of Work to Setup Homelab
 
+## Thursday, October 20, 2022, 6:30:30PM EDT
+
+* Mac Minis do not support iPXE boot (even from USB chain)
+* Realized Talos/Sidero would be great on Optiplex nodes (not Mac)
+* Completely dropping Talos/Sidero for now. ;(
+* Back to regular `kubeadm` "on prem" Kubernetes cluster
+* Dropping DHCP from private (VLAN18), not needed, safer, simpler
+
 ## Thursday, October 20, 2022, 5:23:37PM EDT
 
 * Overview of final VLAN setup on 198.18/15 divided in two

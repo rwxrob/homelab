@@ -117,29 +117,7 @@ waste as well.
 Kubernetes is that the 30% performance penalty from virtualisation
 (which all cloud providers have) can be avoided.
 
-**etcd outside of Kubernetes.** Even though `kubeadm` will nicely setup
-etcd within a Pod *inside* Kubernetes, this makes me uncomfortable. If
-K8S dies, everything dies. So having K8S problems could actually prevent
-me from keeping etcd healthy. Having etcd external will require slightly
-more management (independent certificate management cycles,
-out-of-cluster backup methods, etc.) but I sleep better knowing the most
-important component of my K8S cluster has its own home.
-
-**192.168.1.0/24 subnet.** This is the default in my home router. It has
-plenty of IP addresses for the devices on our home network and I don't
-feel like changing that right now. Most new machines will be VMs on a
-private virtual network within Kubernetes. Rather than use network
-segmentation for protection, I use a zero-trust approach to not trust
-any device on the network and gather and audit all access with
-centralized logging. Also, should be using DNS for most things.
-
-**Physical key login.** All access is simplified and hardened by the use
-of a Yubikey physical key. This includes SSH and
-Keycloak/OpenLDAP/Kerberos. The goal is to never allow any access to any
-device from any user whatsoever without possessing one. Even if someone
-did get in and elevate permissions while not being caught by real-time
-auditing they still wouldn't be able to use any of the certs for that
-user without being able to touch the physical key.
+**etcd "stacked" within Kubernetes.** 
 
 **No disk encryption.** I just don't need it so the overhead would be
 wasted. Besides, if I did need it, I could just encrypt a loopback

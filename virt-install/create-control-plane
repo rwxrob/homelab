@@ -1,0 +1,23 @@
+#!/bin/bash
+
+base="/var/lib/libvirt/images/ubuntu-22.04-server-cloudimg-amd64.img"
+
+install() {
+  local name="$1"
+  local disk="/tmp/$name"
+  cp "$base" "$disk"
+  virt-install \
+    --name "$name" \
+    --vcpus 1 \
+    --memory 2048 \
+    --import \
+    --os-variant  ubuntu22.04 \
+    --network default \
+    --console pty,target_type=serial \
+    --graphics vnc \
+    --cloud-init root-password-generate=on,disable=on \
+    --disk="$disk",device=disk
+}
+
+test -z "$1" && echo "usage: $0 NAME" && exit 1
+install "$1"

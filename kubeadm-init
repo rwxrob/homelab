@@ -1,9 +1,13 @@
 #!/bin/bash
 
 kubeadm init \
-  --control-plane-endpoint k8s:6443 \
+  --control-plane-endpoint k8s.lab.rwx.gg:6443 \
   --pod-network-cidr 172.16.0.0/12 \
   --service-cidr 10.96.0.0/12 \
   --kubernetes-version 1.24.6 \
+  --image-repository k8s.gcr.io \
   --skip-certificate-key-print \
+  --service-dns-domain cluster.local \
+  --cert-dir /usr/local/share/ca-certificates \
   --upload-certs
+
