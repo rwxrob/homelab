@@ -1,0 +1,58 @@
+-------------------------- InitConfiguration ------------------------
+
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: InitConfiguration
+bootstrapTokens:
+  - token: # put token here, so that it's predictable
+    # generate with "kubeadm token generate"
+    description: kubeadm bootstrap token
+    ttl: 24h
+nodeRegistration:
+  criSocket: unix:///var/run/crio/crio.sock
+  kubeletExtraArgs:
+    cgroup-driver: systemd
+    node-ip: {{ NODE_IP }}
+localAPIEndpoint:
+  advertiseAddress: $NODE_IP
+  bindPort: 6444
+# this is used by HA installs to transfer certs between control-plane nodes
+# generate with "kubeadm certs certificate-key"
+certificateKey: # put certificate key here, so that it's predictable
+
+----------------------- ClusterConfiguration -----------------------
+
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+apiServer:
+  certSANs:
+    - $API_IP
+    - $API_HOSTNAME
+  # etcd secret encryption at rest: https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
+  # extraArgs:
+  #   encryption-provider-config: /etc/kubernetes/pki/kube-apiserver-encryption.yaml
+controlPlaneEndpoint: $LB_IP_OR_HOSTNAME:6443
+kubernetesVersion: v1.2x.y
+networking:
+  podSubnet: 192.168.0.0/16
+
+----------------------- KubeletConfiguration -----------------------
+
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+serverTLSBootstrap: true
+kubeReserved:
+  cpu: "1"
+  memory: 2Gi
+  ephemeral-storage: 10Gi
+systemReserved:
+  cpu: "1"
+  memory: 2Gi
+  ephemeral-storage: 10Gi
+evictionHard:
+  memory.available: 2Gi
+
+---------------------- KubeProxyConfiguration ----------------------
+
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: ipvs
