@@ -109,7 +109,7 @@ containers and developers to master.
 but swimming upstream to do so. Also, Keycloak is mandatory for things
 that will mirror what I do at work.
 
-**No Proxmox.** Only supports 32 nodes per cluster and falls on it's face
+**No Proxmox.** Only supports 32 nodes per cluster and falls on its face
 with just 14 (which I tried). Using KVM directly and Virtual Machine
 Manager instead, which saves on a lot of Proxmox framework overhead
 waste as well.
@@ -142,7 +142,7 @@ I'm at stage #7 now.
 
 I'm separating the hardware into two racks to make it easier to move
 around and, when necessary, locate close to separate circuits (although
-I'm shameless enough to run a power extension chord from a good 20A
+I'm shameless enough to run a power extension cord from a good 20A
 bathroom circuit breaker if I need).
 
 The 21U rack height allows me to put a monitor/keyboard/mouse on top and
@@ -205,4 +205,4 @@ TOTAL       |  2737W
 
 * [Protectli Vault](https://a.co/d/5Q53hbG)
 * [Homelabbity](https://www.reddit.com/r/homelab/)
-* [LabPorn](https://www.reddit/r/LabPorn/)
+* [LabPorn](https://www.reddit.com/r/LabPorn/)
