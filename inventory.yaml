@@ -1,0 +1,11 @@
+all:
+  vars:
+    ansible_become: true
+
+  children:
+    munge_nodes:
+      hosts:
+        slurmctl:
+        slurm-c1:
+        slurm-c2:
+        slurm-c3:

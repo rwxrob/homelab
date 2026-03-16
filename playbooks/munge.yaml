@@ -1,0 +1,64 @@
+- name: Install munge packages everywhere
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install munge packages
+      ansible.builtin.dnf:
+        name:
+          - munge
+          - munge-libs
+        state: present
+
+- name: Create munge key on controller
+  hosts: slurmctl
+  become: true
+
+  tasks:
+    - name: Check whether munge key already exists
+      ansible.builtin.stat:
+        path: /etc/munge/munge.key
+      register: munge_key_stat
+
+    - name: Create munge key if missing
+      ansible.builtin.command: /usr/sbin/create-munge-key
+      when: not munge_key_stat.stat.exists
+
+    - name: Fix munge key ownership and permissions on controller
+      ansible.builtin.file:
+        path: /etc/munge/munge.key
+        owner: munge
+        group: munge
+        mode: '0400'
+
+    - name: Read munge key from controller
+      ansible.builtin.slurp:
+        src: /etc/munge/munge.key
+      register: munge_key_slurped
+
+- name: Distribute munge key and start service everywhere
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Ensure /etc/munge exists
+      ansible.builtin.file:
+        path: /etc/munge
+        state: directory
+        owner: munge
+        group: munge
+        mode: '0700'
+
+    - name: Copy shared munge key to all nodes
+      ansible.builtin.copy:
+        content: "{{ hostvars['slurmctl']['munge_key_slurped']['content'] | b64decode }}"
+        dest: /etc/munge/munge.key
+        owner: munge
+        group: munge
+        mode: '0400'
+
+    - name: Enable and start munge
+      ansible.builtin.systemd:
+        name: munge
+        enabled: true
+        state: started
