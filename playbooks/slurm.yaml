@@ -124,3 +124,39 @@
         name: slurmd
         enabled: true
         state: started
+
+- name: Validate SLURM controller
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Verify slurmctld is active
+      ansible.builtin.systemd:
+        name: slurmctld
+      register: slurmctld_status
+      failed_when: slurmctld_status.status.ActiveState != 'active'
+
+    - name: Ping slurmctld
+      ansible.builtin.command: scontrol ping
+      changed_when: false
+
+    - name: Check all compute nodes are reachable
+      ansible.builtin.command: sinfo --noheader --format="%n %t"
+      register: sinfo_out
+      changed_when: false
+      failed_when: sinfo_out.rc != 0
+
+    - name: Submit and wait for a test job
+      ansible.builtin.command: srun --nodes={{ groups['slurm_compute'] | length }} --ntasks={{ groups['slurm_compute'] | length }} hostname
+      changed_when: false
+
+- name: Validate slurmd on compute nodes
+  hosts: slurm_compute
+  become: true
+
+  tasks:
+    - name: Verify slurmd is active
+      ansible.builtin.systemd:
+        name: slurmd
+      register: slurmd_status
+      failed_when: slurmd_status.status.ActiveState != 'active'
