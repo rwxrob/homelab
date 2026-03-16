@@ -1,0 +1,126 @@
+- name: Gather facts from all nodes
+  hosts: slurm_controller:slurm_compute
+  become: true
+
+- name: Install SLURM controller packages
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Install slurmctld packages
+      ansible.builtin.dnf:
+        name:
+          - slurm
+          - slurm-slurmctld
+        state: present
+
+- name: Install SLURM compute packages
+  hosts: slurm_compute
+  become: true
+
+  tasks:
+    - name: Install slurmd packages
+      ansible.builtin.dnf:
+        name:
+          - slurm
+          - slurm-slurmd
+        state: present
+
+- name: Generate and distribute slurm.conf
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Ensure /etc/slurm directory exists
+      ansible.builtin.file:
+        path: /etc/slurm
+        state: directory
+        owner: slurm
+        group: slurm
+        mode: '0755'
+
+    - name: Write slurm.conf
+      ansible.builtin.copy:
+        dest: /etc/slurm/slurm.conf
+        owner: slurm
+        group: slurm
+        mode: '0644'
+        content: |
+          ClusterName=homelab
+          SlurmctldHost={{ groups['slurm_controller'] | first }}
+          AuthType=auth/munge
+          ProctrackType=proctrack/linuxproc
+          ReturnToService=1
+
+          SlurmctldPidFile=/var/run/slurmctld.pid
+          SlurmdPidFile=/var/run/slurmd.pid
+          SlurmdSpoolDir=/var/spool/slurmd
+          StateSaveLocation=/var/spool/slurmctld
+
+          SwitchType=switch/none
+          TaskPlugin=task/none
+          SchedulerType=sched/backfill
+          SelectType=select/cons_tres
+          SelectTypeParameters=CR_Core
+
+          InactiveLimit=0
+          MinJobAge=300
+          ShutdownTimeout=60
+          WaitTime=0
+
+          AccountingStorageType=accounting_storage/none
+          JobAcctGatherType=jobacct_gather/none
+
+          {% for host in groups['slurm_compute'] %}
+          NodeName={{ host }} CPUs={{ hostvars[host]['ansible_processor_vcpus'] }} RealMemory={{ (hostvars[host]['ansible_memtotal_mb'] * 0.95) | int }} State=UNKNOWN
+          {% endfor %}
+
+          PartitionName=compute Nodes={{ groups['slurm_compute'] | join(',') }} Default=YES MaxTime=INFINITE State=UP
+
+    - name: Read slurm.conf for distribution
+      ansible.builtin.slurp:
+        src: /etc/slurm/slurm.conf
+      register: slurm_conf_slurped
+
+- name: Distribute slurm.conf to compute nodes
+  hosts: slurm_compute
+  become: true
+
+  tasks:
+    - name: Ensure /etc/slurm directory exists
+      ansible.builtin.file:
+        path: /etc/slurm
+        state: directory
+        owner: slurm
+        group: slurm
+        mode: '0755'
+
+    - name: Copy slurm.conf to compute nodes
+      ansible.builtin.copy:
+        content: "{{ hostvars[groups['slurm_controller'] | first]['slurm_conf_slurped']['content'] | b64decode }}"
+        dest: /etc/slurm/slurm.conf
+        owner: slurm
+        group: slurm
+        mode: '0644'
+
+- name: Start slurmctld on controller
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Enable and start slurmctld
+      ansible.builtin.systemd:
+        name: slurmctld
+        enabled: true
+        state: started
+
+- name: Start slurmd on compute nodes
+  hosts: slurm_compute
+  become: true
+
+  tasks:
+    - name: Enable and start slurmd
+      ansible.builtin.systemd:
+        name: slurmd
+        enabled: true
+        state: started

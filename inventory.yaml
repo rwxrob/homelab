@@ -9,3 +9,13 @@ all:
         slurm-c1:
         slurm-c2:
         slurm-c3:
+
+    slurm_controller:
+      hosts:
+        slurmctl:
+
+    slurm_compute:
+      hosts:
+        slurm-c1:
+        slurm-c2:
+        slurm-c3:
