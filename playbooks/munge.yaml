@@ -62,3 +62,18 @@
         name: munge
         enabled: true
         state: started
+
+- name: Validate munge across all nodes
+  hosts: munge_nodes
+  become: true
+
+  tasks:
+    - name: Verify munge service is active
+      ansible.builtin.systemd:
+        name: munge
+      register: munge_status
+      failed_when: munge_status.status.ActiveState != 'active'
+
+    - name: Generate and verify munge token locally
+      ansible.builtin.shell: munge -n | unmunge
+      changed_when: false
