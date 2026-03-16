@@ -63,6 +63,17 @@
         enabled: true
         state: started
 
+- name: Back up munge key to local machine
+  hosts: slurmctl
+  become: true
+
+  tasks:
+    - name: Fetch munge key to local backups directory
+      ansible.builtin.fetch:
+        src: /etc/munge/munge.key
+        dest: backups/munge.key
+        flat: true
+
 - name: Validate munge across all nodes
   hosts: munge_nodes
   become: true
