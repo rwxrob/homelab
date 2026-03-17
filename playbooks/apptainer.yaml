@@ -1,0 +1,13 @@
+- name: Install Apptainer on compute nodes
+  hosts: slurm_compute
+  become: true
+
+  tasks:
+    - name: Install apptainer
+      ansible.builtin.dnf:
+        name: apptainer
+        state: present
+
+    - name: Verify apptainer is installed
+      ansible.builtin.command: apptainer --version
+      changed_when: false
