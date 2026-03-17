@@ -135,7 +135,7 @@
       ansible.builtin.command: sacctmgr -i add cluster homelab
       register: sacctmgr_out
       changed_when: "'Adding Cluster' in sacctmgr_out.stdout"
-      failed_when: sacctmgr_out.rc != 0 and 'already exists' not in sacctmgr_out.stderr
+      failed_when: sacctmgr_out.rc != 0 and 'already exists' not in sacctmgr_out.stdout
 
     - name: Verify slurmdbd is active
       ansible.builtin.systemd:
