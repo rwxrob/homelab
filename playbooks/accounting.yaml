@@ -1,0 +1,128 @@
+- name: Install MariaDB and slurm-slurmdbd on controller
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Install mariadb-server and slurm-slurmdbd
+      ansible.builtin.dnf:
+        name:
+          - mariadb-server
+          - slurm-slurmdbd
+        state: present
+
+    - name: Enable and start mariadb
+      ansible.builtin.systemd:
+        name: mariadb
+        enabled: true
+        state: started
+
+- name: Configure MariaDB for SLURM accounting
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Create slurm_acct_db database
+      ansible.builtin.command: >
+        mysql -e "CREATE DATABASE IF NOT EXISTS slurm_acct_db;"
+      changed_when: false
+
+    - name: Create slurm DB user with privileges
+      ansible.builtin.command: >
+        mysql -e "GRANT ALL ON slurm_acct_db.* TO 'slurm'@'localhost'
+        IDENTIFIED BY 'slurmpass' WITH GRANT OPTION;"
+      changed_when: false
+
+    - name: Flush privileges
+      ansible.builtin.command: mysql -e "FLUSH PRIVILEGES;"
+      changed_when: false
+
+- name: Write slurmdbd.conf on controller
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Ensure /etc/slurm directory exists
+      ansible.builtin.file:
+        path: /etc/slurm
+        state: directory
+        owner: slurm
+        group: slurm
+        mode: '0755'
+
+    - name: Write /etc/slurm/slurmdbd.conf
+      ansible.builtin.copy:
+        dest: /etc/slurm/slurmdbd.conf
+        owner: slurm
+        group: slurm
+        mode: '0600'
+        content: |
+          AuthType=auth/munge
+          DbdHost={{ groups['slurm_controller'] | first }}
+          DbdPort=6819
+          SlurmUser=slurm
+          StorageType=accounting_storage/mysql
+          StorageHost=localhost
+          StoragePort=3306
+          StorageUser=slurm
+          StoragePass=slurmpass
+          StorageLoc=slurm_acct_db
+          LogFile=/var/log/slurmdbd.log
+          PidFile=/var/run/slurmdbd.pid
+          MessageTimeout=300
+
+- name: Start slurmdbd then restart slurmctld
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Enable and start slurmdbd
+      ansible.builtin.systemd:
+        name: slurmdbd
+        enabled: true
+        state: started
+
+    - name: Wait for slurmdbd to be active
+      ansible.builtin.systemd:
+        name: slurmdbd
+      register: slurmdbd_status
+      until: slurmdbd_status.status.ActiveState == 'active'
+      retries: 10
+      delay: 3
+
+    - name: Restart slurmctld to pick up new slurm.conf
+      ansible.builtin.systemd:
+        name: slurmctld
+        state: restarted
+
+- name: Register cluster and validate accounting
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Add homelab cluster to accounting
+      ansible.builtin.command: sacctmgr -i add cluster homelab
+      register: sacctmgr_out
+      changed_when: "'Adding Cluster' in sacctmgr_out.stdout"
+      failed_when: sacctmgr_out.rc != 0 and 'already exists' not in sacctmgr_out.stderr
+
+    - name: Verify slurmdbd is active
+      ansible.builtin.systemd:
+        name: slurmdbd
+      register: slurmdbd_check
+      failed_when: slurmdbd_check.status.ActiveState != 'active'
+
+    - name: Verify slurmctld is active
+      ansible.builtin.systemd:
+        name: slurmctld
+      register: slurmctld_check
+      failed_when: slurmctld_check.status.ActiveState != 'active'
+
+    - name: Check cluster is registered
+      ansible.builtin.command: sacctmgr -n show cluster homelab
+      register: cluster_check
+      changed_when: false
+      failed_when: "'homelab' not in cluster_check.stdout"
+
+    - name: Run sacct to confirm accounting is live
+      ansible.builtin.command: sacct --allusers --format=JobID,JobName,State
+      changed_when: false
