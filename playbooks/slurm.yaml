@@ -14,7 +14,7 @@
 
     - name: Install OpenHPC release package
       ansible.builtin.dnf:
-        name: "https://github.com/openhpc/ohpc/releases/download/v3.0.GA/ohpc-release-3-1.el{{ ansible_distribution_major_version }}.x86_64.rpm"
+        name: "https://repos.openhpc.community/OpenHPC/3/EL_{{ ansible_distribution_major_version }}/x86_64/ohpc-release-3-1.el{{ ansible_distribution_major_version }}.x86_64.rpm"
         state: present
         disable_gpg_check: true
 
