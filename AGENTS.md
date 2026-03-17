@@ -4,6 +4,7 @@
 
 - Use conventional commit messages (`feat:`, `fix:`, `docs:`, `refactor:`, `chore:`, etc.)
 - Never add co-author attribution to commits
+- Always commit and push to the `dev` branch — never commit directly to `main`
 - Push immediately after every commit — no need to ask
 - Do not use `-K` (become password prompt) with ansible-playbook — passwordless sudo is assumed on all nodes
 
