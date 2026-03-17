@@ -89,7 +89,39 @@
       retries: 10
       delay: 3
 
-    - name: Restart slurmctld to pick up new slurm.conf
+    - name: Enable slurmdbd accounting in slurm.conf
+      ansible.builtin.replace:
+        path: /etc/slurm/slurm.conf
+        regexp: "{{ item.regexp }}"
+        replace: "{{ item.replace }}"
+      loop:
+        - regexp: '^AccountingStorageType=.*'
+          replace: 'AccountingStorageType=accounting_storage/slurmdbd'
+        - regexp: '^JobAcctGatherType=.*'
+          replace: 'JobAcctGatherType=jobacct_gather/linux'
+      notify: restart slurmctld
+
+    - name: Add AccountingStorageHost to slurm.conf
+      ansible.builtin.lineinfile:
+        path: /etc/slurm/slurm.conf
+        insertafter: '^AccountingStorageType=.*'
+        line: "AccountingStorageHost={{ groups['slurm_controller'] | first }}"
+        regexp: '^AccountingStorageHost=.*'
+
+    - name: Add AccountingStoragePort to slurm.conf
+      ansible.builtin.lineinfile:
+        path: /etc/slurm/slurm.conf
+        insertafter: '^AccountingStorageHost=.*'
+        line: 'AccountingStoragePort=6819'
+        regexp: '^AccountingStoragePort=.*'
+
+    - name: Restart slurmctld to pick up accounting config
+      ansible.builtin.systemd:
+        name: slurmctld
+        state: restarted
+
+  handlers:
+    - name: restart slurmctld
       ansible.builtin.systemd:
         name: slurmctld
         state: restarted

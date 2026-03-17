@@ -149,10 +149,8 @@
 
           DependencyParameters=kill_invalid_depend
 
-          AccountingStorageType=accounting_storage/slurmdbd
-          AccountingStorageHost={{ groups['slurm_controller'] | first }}
-          AccountingStoragePort=6819
-          JobAcctGatherType=jobacct_gather/linux
+          AccountingStorageType=accounting_storage/none
+          JobAcctGatherType=jobacct_gather/none
 
           {% for host in groups['slurm_compute'] %}
           NodeName={{ host }} CPUs={{ hostvars[host]['ansible_processor_vcpus'] }} RealMemory={{ (hostvars[host]['ansible_memtotal_mb'] * 0.95) | int }} State=UNKNOWN
