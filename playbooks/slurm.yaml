@@ -17,7 +17,7 @@
         regexp: '^SELINUX='
         line: 'SELINUX=permissive'
 
-- name: Enable EPEL and OpenHPC repos on all nodes
+- name: Enable EPEL and clean up SLURM on all nodes
   hosts: slurm_controller:slurm_compute
   become: true
 
@@ -27,13 +27,7 @@
         name: epel-release
         state: present
 
-    - name: Install OpenHPC release package
-      ansible.builtin.dnf:
-        name: "https://repos.openhpc.community/OpenHPC/3/EL_{{ ansible_distribution_major_version }}/x86_64/ohpc-release-3-1.el{{ ansible_distribution_major_version }}.x86_64.rpm"
-        state: present
-        disable_gpg_check: true
-
-    - name: Stop and remove all SLURM packages
+    - name: Remove all SLURM packages
       ansible.builtin.dnf:
         name:
           - slurm
@@ -61,8 +55,8 @@
     - name: Install slurmctld packages
       ansible.builtin.dnf:
         name:
-          - slurm-ohpc
-          - slurm-slurmctld-ohpc
+          - slurm
+          - slurm-slurmctld
         state: present
 
 - name: Install SLURM compute packages
@@ -73,8 +67,8 @@
     - name: Install slurmd packages
       ansible.builtin.dnf:
         name:
-          - slurm-ohpc
-          - slurm-slurmd-ohpc
+          - slurm
+          - slurm-slurmd
         state: present
 
 - name: Generate and distribute slurm.conf
