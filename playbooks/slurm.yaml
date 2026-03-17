@@ -32,6 +32,8 @@
       loop:
         - 6817/tcp
         - 6818/tcp
+        - 6819/tcp
+        - 6820-6830/tcp
 
 - name: Set SELinux to permissive on all nodes
   hosts: slurm_controller:slurm_compute
@@ -133,6 +135,8 @@
           SlurmdSpoolDir=/var/spool/slurmd
           StateSaveLocation=/var/spool/slurmctld
 
+          SrunPortRange=6820-6830
+
           SwitchType=switch/none
           TaskPlugin=task/none
           SchedulerType=sched/backfill
@@ -230,7 +234,7 @@
       failed_when: sinfo_out.rc != 0
 
     - name: Submit and wait for a test job
-      ansible.builtin.command: srun --nodes={{ groups['slurm_compute'] | length }} --ntasks={{ groups['slurm_compute'] | length }} hostname
+      ansible.builtin.command: srun --nodes={{ groups['slurm_compute'] | length }} --ntasks-per-node=1 hostname
       changed_when: false
 
 - name: Validate slurmd on compute nodes
