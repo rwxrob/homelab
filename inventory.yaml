@@ -13,9 +13,13 @@ all:
     slurm_controller:
       hosts:
         slurmctl:
+          ansible_host: 10.35.4.169
 
     slurm_compute:
       hosts:
         slurm-c1:
+          ansible_host: 10.35.4.173
         slurm-c2:
+          ansible_host: 10.35.4.174
         slurm-c3:
+          ansible_host: 10.35.4.175

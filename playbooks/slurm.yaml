@@ -2,6 +2,22 @@
   hosts: slurm_controller:slurm_compute
   become: true
 
+- name: Configure hostnames and /etc/hosts on all nodes
+  hosts: slurm_controller:slurm_compute
+  become: true
+
+  tasks:
+    - name: Set hostname to inventory name
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: Ensure all nodes are in /etc/hosts
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        regexp: ".*{{ item }}$"
+        line: "{{ hostvars[item]['ansible_host'] }} {{ item }}"
+      loop: "{{ groups['slurm_controller'] + groups['slurm_compute'] }}"
+
 - name: Set SELinux to permissive on all nodes
   hosts: slurm_controller:slurm_compute
   become: true
