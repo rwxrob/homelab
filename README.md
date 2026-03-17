@@ -44,6 +44,6 @@ ansible-playbook playbooks/slurm.yaml --flush-cache
 ## Rerunning individual playbooks
 
 ```sh
-ansible-playbook playbooks/munge.yaml -K
-ansible-playbook playbooks/slurm.yaml -K
+ansible-playbook playbooks/munge.yaml
+ansible-playbook playbooks/slurm.yaml
 ```
