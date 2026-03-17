@@ -29,12 +29,16 @@ Each compute node has 2 CPUs. SLURM version 22.05.9 from EPEL on all nodes.
 - `DependencyParameters=kill_invalid_depend` — jobs with unsatisfiable dependencies are killed automatically
 - Munge key is backed up to `backups/munge.key` (gitignored) after deployment
 - Node facts (CPU/RAM) are cached in `.ansible_facts_cache/` for 24h (jsonfile backend)
+- SLURM accounting uses `slurmdbd` backed by MariaDB on `slurmctl`; `slurm-slurmdbd` from EPEL; DB credentials hardcoded in `/etc/slurm/slurmdbd.conf` (not vaulted)
+- `slurmdbd.conf` must be `0600 slurm:slurm` or slurmdbd refuses to start
+- `slurmdbd` must be running before `slurmctld` starts
 
 ## Playbook Order
 
 `install-slurm` runs:
 1. `playbooks/munge.yaml` — installs Munge, distributes shared key, validates token auth
 2. `playbooks/slurm.yaml` — installs SLURM, generates and distributes `slurm.conf` from live facts, starts services, validates with a test job
+3. `playbooks/accounting.yaml` — installs MariaDB and slurm-slurmdbd, configures DB, writes slurmdbd.conf, starts slurmdbd, registers cluster, validates with sacct
 
 ## Validation
 

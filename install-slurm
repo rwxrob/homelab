@@ -3,3 +3,4 @@ set -e
 
 ansible-playbook playbooks/munge.yaml
 ansible-playbook playbooks/slurm.yaml
+ansible-playbook playbooks/accounting.yaml

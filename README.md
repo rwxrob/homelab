@@ -28,6 +28,7 @@ This runs the following playbooks in order:
 
 1. `playbooks/munge.yaml` — installs Munge, distributes a shared key, starts the service, and validates token auth on every node
 2. `playbooks/slurm.yaml` — installs SLURM, generates `slurm.conf` from live node facts, distributes it, starts services, and validates the cluster with a test job
+3. `playbooks/accounting.yaml` — installs MariaDB and slurm-slurmdbd on the controller, configures the database, starts slurmdbd, and validates accounting with sacct
 
 ## Munge key backup
 
@@ -41,9 +42,18 @@ Node facts (CPU count, RAM) are cached locally in `.ansible_facts_cache/` for 24
 ansible-playbook playbooks/slurm.yaml --flush-cache
 ```
 
+## Accounting
+
+Job accounting is stored in MariaDB on the controller via `slurmdbd`. The database credentials are hardcoded in `/etc/slurm/slurmdbd.conf` on `slurmctl`. To rerun accounting setup independently:
+
+```sh
+ansible-playbook playbooks/accounting.yaml
+```
+
 ## Rerunning individual playbooks
 
 ```sh
 ansible-playbook playbooks/munge.yaml
 ansible-playbook playbooks/slurm.yaml
+ansible-playbook playbooks/accounting.yaml
 ```
