@@ -127,7 +127,7 @@
           ClusterName=homelab
           SlurmctldHost={{ groups['slurm_controller'] | first }}
           AuthType=auth/munge
-          ProctrackType=proctrack/linuxproc
+          ProctrackType=proctrack/cgroup
           ReturnToService=1
 
           SlurmctldPidFile=/var/run/slurmctld.pid
@@ -138,7 +138,7 @@
           SrunPortRange=6820-6830
 
           SwitchType=switch/none
-          TaskPlugin=task/none
+          TaskPlugin=task/cgroup
           SchedulerType=sched/backfill
           SelectType=select/cons_tres
           SelectTypeParameters=CR_Core
@@ -146,6 +146,8 @@
           InactiveLimit=0
           MinJobAge=300
           WaitTime=0
+
+          DependencyParameters=kill_invalid_depend
 
           AccountingStorageType=accounting_storage/none
           JobAcctGatherType=jobacct_gather/none
