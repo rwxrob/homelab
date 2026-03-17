@@ -33,13 +33,25 @@
         state: present
         disable_gpg_check: true
 
-    - name: Remove conflicting non-ohpc SLURM packages
+    - name: Stop and remove all SLURM packages
       ansible.builtin.dnf:
         name:
           - slurm
           - slurm-slurmctld
           - slurm-slurmd
+          - slurm-ohpc
+          - slurm-slurmctld-ohpc
+          - slurm-slurmd-ohpc
         state: absent
+
+    - name: Remove SLURM state and spool directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /var/spool/slurmctld
+        - /var/spool/slurmd
+        - /etc/slurm
 
 - name: Install SLURM controller packages
   hosts: slurm_controller
