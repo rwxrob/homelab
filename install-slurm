@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+
+ansible-playbook playbooks/munge.yaml
+ansible-playbook playbooks/slurm.yaml

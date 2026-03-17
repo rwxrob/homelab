@@ -1,0 +1,251 @@
+- name: Gather facts from all nodes
+  hosts: slurm_controller:slurm_compute
+  become: true
+
+- name: Configure hostnames and /etc/hosts on all nodes
+  hosts: slurm_controller:slurm_compute
+  become: true
+
+  tasks:
+    - name: Set hostname to inventory name
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: Ensure all nodes are in /etc/hosts
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        regexp: ".*{{ item }}$"
+        line: "{{ hostvars[item]['ansible_host'] }} {{ item }}"
+      loop: "{{ groups['slurm_controller'] + groups['slurm_compute'] }}"
+
+- name: Open SLURM firewall ports on all nodes
+  hosts: slurm_controller:slurm_compute
+  become: true
+
+  tasks:
+    - name: Open slurmctld and slurmd ports
+      ansible.posix.firewalld:
+        port: "{{ item }}"
+        permanent: true
+        state: enabled
+        immediate: true
+      loop:
+        - 6817/tcp
+        - 6818/tcp
+        - 6819/tcp
+        - 6820-6830/tcp
+
+- name: Set SELinux to permissive on all nodes
+  hosts: slurm_controller:slurm_compute
+  become: true
+
+  tasks:
+    - name: Set SELinux permissive at runtime
+      ansible.builtin.command: setenforce 0
+      changed_when: false
+
+    - name: Set SELinux permissive persistently
+      ansible.builtin.lineinfile:
+        path: /etc/selinux/config
+        regexp: '^SELINUX='
+        line: 'SELINUX=permissive'
+
+- name: Enable EPEL and clean up SLURM on all nodes
+  hosts: slurm_controller:slurm_compute
+  become: true
+
+  tasks:
+    - name: Install epel-release
+      ansible.builtin.dnf:
+        name: epel-release
+        state: present
+
+    - name: Remove all SLURM packages
+      ansible.builtin.dnf:
+        name:
+          - slurm
+          - slurm-slurmctld
+          - slurm-slurmd
+          - slurm-ohpc
+          - slurm-slurmctld-ohpc
+          - slurm-slurmd-ohpc
+        state: absent
+
+    - name: Remove SLURM state and spool directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /var/spool/slurmctld
+        - /var/spool/slurmd
+        - /etc/slurm
+
+- name: Install SLURM controller packages
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Install slurmctld packages
+      ansible.builtin.dnf:
+        name:
+          - slurm
+          - slurm-slurmctld
+        state: present
+
+- name: Install SLURM compute packages
+  hosts: slurm_compute
+  become: true
+
+  tasks:
+    - name: Install slurmd packages
+      ansible.builtin.dnf:
+        name:
+          - slurm
+          - slurm-slurmd
+        state: present
+
+- name: Generate and distribute slurm.conf
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Ensure /etc/slurm directory exists
+      ansible.builtin.file:
+        path: /etc/slurm
+        state: directory
+        owner: slurm
+        group: slurm
+        mode: '0755'
+
+    - name: Write slurm.conf
+      ansible.builtin.copy:
+        dest: /etc/slurm/slurm.conf
+        owner: slurm
+        group: slurm
+        mode: '0644'
+        content: |
+          ClusterName=homelab
+          SlurmctldHost={{ groups['slurm_controller'] | first }}
+          AuthType=auth/munge
+          ProctrackType=proctrack/cgroup
+          ReturnToService=1
+
+          SlurmctldPidFile=/var/run/slurmctld.pid
+          SlurmdPidFile=/var/run/slurmd.pid
+          SlurmdSpoolDir=/var/spool/slurmd
+          StateSaveLocation=/var/spool/slurmctld
+
+          SrunPortRange=6820-6830
+
+          SwitchType=switch/none
+          TaskPlugin=task/cgroup
+          SchedulerType=sched/backfill
+          SelectType=select/cons_tres
+          SelectTypeParameters=CR_Core
+
+          InactiveLimit=0
+          MinJobAge=300
+          WaitTime=0
+
+          DependencyParameters=kill_invalid_depend
+
+          AccountingStorageType=accounting_storage/none
+          JobAcctGatherType=jobacct_gather/none
+
+          {% for host in groups['slurm_compute'] %}
+          NodeName={{ host }} CPUs={{ hostvars[host]['ansible_processor_vcpus'] }} RealMemory={{ (hostvars[host]['ansible_memtotal_mb'] * 0.95) | int }} State=UNKNOWN
+          {% endfor %}
+
+          PartitionName=compute Nodes={{ groups['slurm_compute'] | join(',') }} Default=YES MaxTime=INFINITE State=UP
+
+    - name: Read slurm.conf for distribution
+      ansible.builtin.slurp:
+        src: /etc/slurm/slurm.conf
+      register: slurm_conf_slurped
+
+- name: Distribute slurm.conf to compute nodes
+  hosts: slurm_compute
+  become: true
+
+  tasks:
+    - name: Ensure /etc/slurm directory exists
+      ansible.builtin.file:
+        path: /etc/slurm
+        state: directory
+        owner: slurm
+        group: slurm
+        mode: '0755'
+
+    - name: Copy slurm.conf to compute nodes
+      ansible.builtin.copy:
+        content: "{{ hostvars[groups['slurm_controller'] | first]['slurm_conf_slurped']['content'] | b64decode }}"
+        dest: /etc/slurm/slurm.conf
+        owner: slurm
+        group: slurm
+        mode: '0644'
+
+- name: Start slurmctld on controller
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Ensure StateSaveLocation exists
+      ansible.builtin.file:
+        path: /var/spool/slurmctld
+        state: directory
+        owner: slurm
+        group: slurm
+        mode: '0755'
+
+    - name: Enable and start slurmctld
+      ansible.builtin.systemd:
+        name: slurmctld
+        enabled: true
+        state: started
+
+- name: Start slurmd on compute nodes
+  hosts: slurm_compute
+  become: true
+
+  tasks:
+    - name: Enable and start slurmd
+      ansible.builtin.systemd:
+        name: slurmd
+        enabled: true
+        state: started
+
+- name: Validate SLURM controller
+  hosts: slurm_controller
+  become: true
+
+  tasks:
+    - name: Verify slurmctld is active
+      ansible.builtin.systemd:
+        name: slurmctld
+      register: slurmctld_status
+      failed_when: slurmctld_status.status.ActiveState != 'active'
+
+    - name: Ping slurmctld
+      ansible.builtin.command: scontrol ping
+      changed_when: false
+
+    - name: Check all compute nodes are reachable
+      ansible.builtin.command: sinfo --noheader --format="%n %t"
+      register: sinfo_out
+      changed_when: false
+      failed_when: sinfo_out.rc != 0
+
+    - name: Submit and wait for a test job
+      ansible.builtin.command: srun --nodes={{ groups['slurm_compute'] | length }} --ntasks-per-node=1 hostname
+      changed_when: false
+
+- name: Validate slurmd on compute nodes
+  hosts: slurm_compute
+  become: true
+
+  tasks:
+    - name: Verify slurmd is active
+      ansible.builtin.systemd:
+        name: slurmd
+      register: slurmd_status
+      failed_when: slurmd_status.status.ActiveState != 'active'
