@@ -89,7 +89,6 @@
 
           InactiveLimit=0
           MinJobAge=300
-          ShutdownTimeout=60
           WaitTime=0
 
           AccountingStorageType=accounting_storage/none
