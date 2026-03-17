@@ -38,7 +38,7 @@ To capture a terminal session log:
 script session.log
 ```
 
-`session.log` is gitignored.
+`session.log` is gitignored. Agents do not tail this file automatically — ask explicitly if you want live log monitoring.
 
 ## Munge key backup
 
