@@ -2,6 +2,21 @@
   hosts: slurm_controller:slurm_compute
   become: true
 
+- name: Set SELinux to permissive on all nodes
+  hosts: slurm_controller:slurm_compute
+  become: true
+
+  tasks:
+    - name: Set SELinux permissive at runtime
+      ansible.builtin.command: setenforce 0
+      changed_when: false
+
+    - name: Set SELinux permissive persistently
+      ansible.builtin.lineinfile:
+        path: /etc/selinux/config
+        regexp: '^SELINUX='
+        line: 'SELINUX=permissive'
+
 - name: Enable EPEL and OpenHPC repos on all nodes
   hosts: slurm_controller:slurm_compute
   become: true
