@@ -2,6 +2,22 @@
   hosts: slurm_controller:slurm_compute
   become: true
 
+- name: Enable EPEL and OpenHPC repos on all nodes
+  hosts: slurm_controller:slurm_compute
+  become: true
+
+  tasks:
+    - name: Install epel-release
+      ansible.builtin.dnf:
+        name: epel-release
+        state: present
+
+    - name: Install OpenHPC release package
+      ansible.builtin.dnf:
+        name: "https://github.com/openhpc/ohpc/releases/download/v3.0.GA/ohpc-release-3-1.el{{ ansible_distribution_major_version }}.x86_64.rpm"
+        state: present
+        disable_gpg_check: true
+
 - name: Install SLURM controller packages
   hosts: slurm_controller
   become: true
@@ -10,8 +26,8 @@
     - name: Install slurmctld packages
       ansible.builtin.dnf:
         name:
-          - slurm
-          - slurm-slurmctld
+          - slurm-ohpc
+          - slurm-slurmctld-ohpc
         state: present
 
 - name: Install SLURM compute packages
@@ -22,8 +38,8 @@
     - name: Install slurmd packages
       ansible.builtin.dnf:
         name:
-          - slurm
-          - slurm-slurmd
+          - slurm-ohpc
+          - slurm-slurmd-ohpc
         state: present
 
 - name: Generate and distribute slurm.conf
