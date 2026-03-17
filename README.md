@@ -30,6 +30,16 @@ This runs the following playbooks in order:
 2. `playbooks/slurm.yaml` — installs SLURM, generates `slurm.conf` from live node facts, distributes it, starts services, and validates the cluster with a test job
 3. `playbooks/accounting.yaml` — installs MariaDB and slurm-slurmdbd on the controller, configures the database, starts slurmdbd, and validates accounting with sacct
 
+## Session logging
+
+To capture a terminal session log:
+
+```sh
+script session.log
+```
+
+`session.log` is gitignored.
+
 ## Munge key backup
 
 After deployment the munge key is fetched from the controller to `backups/munge.key` on the local machine. Keep this somewhere safe — it is the only way to restore Munge authentication if the controller is lost. The `backups/` directory is gitignored.
