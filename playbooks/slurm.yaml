@@ -131,6 +131,14 @@
   become: true
 
   tasks:
+    - name: Ensure StateSaveLocation exists
+      ansible.builtin.file:
+        path: /var/spool/slurmctld
+        state: directory
+        owner: slurm
+        group: slurm
+        mode: '0755'
+
     - name: Enable and start slurmctld
       ansible.builtin.systemd:
         name: slurmctld
