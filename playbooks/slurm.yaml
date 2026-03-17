@@ -18,6 +18,21 @@
         line: "{{ hostvars[item]['ansible_host'] }} {{ item }}"
       loop: "{{ groups['slurm_controller'] + groups['slurm_compute'] }}"
 
+- name: Open SLURM firewall ports on all nodes
+  hosts: slurm_controller:slurm_compute
+  become: true
+
+  tasks:
+    - name: Open slurmctld and slurmd ports
+      ansible.posix.firewalld:
+        port: "{{ item }}"
+        permanent: true
+        state: enabled
+        immediate: true
+      loop:
+        - 6817/tcp
+        - 6818/tcp
+
 - name: Set SELinux to permissive on all nodes
   hosts: slurm_controller:slurm_compute
   become: true
